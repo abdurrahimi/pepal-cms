@@ -1,7 +1,6 @@
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'cms',
+    title: 'Jual Saldo Paypal dan Jasa Pembayaran Online - Saldobit',
     htmlAttrs: {
       lang: 'en'
     },
@@ -9,25 +8,9 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href:'https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css'},
-      { rel: 'stylesheet', href:'https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css'},
-      { rel: 'stylesheet', href:'assets/css/style.css'},
-      { rel: 'stylesheet', href:'https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css'},
-      { rel: 'stylesheet', href:'https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css'},
-      { rel: 'stylesheet', href:'https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css'},
-    ],
-    script: [
-      { src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js' },
-      { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js' },
-      { src: 'assets/vendor/apexcharts/apexcharts.min.js' },
-      { src: 'assets/vendor/datatables/datatables.min.js' },
-      { src: 'assets/vendor/datatables/dataTables.bootstrap5.min.js' },
-      { src: 'assets/vendor/datatables/responsive.bootstrap5.min.js' },
-      { src: 'assets/js/main.js' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'title', content: 'Jual Saldo Paypal dan Jasa Pembayaran Online - Saldobit' },
+      { name:'description', content: 'Situs jual saldo PayPal dan jasa pembayaran online. Nikmati beli saldo PayPal, top up PayPal, isi saldo PayPal dengan murah, cepat dan aman di Saldobit.'}
     ]
   },
 
@@ -50,15 +33,79 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    'vue-sweetalert2/nuxt'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    proxy: true,
+    Headers:{
+      'Content-Type': 'application/json'
+
+    },
+    common: {
+      'Accept': 'application/json'
+    },
+  },
+
+  proxy: {
+    '/api/': { target: process.env.API_URL, pathRewrite: {'^/api/': ''} }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  ssr: false,
+  server: {
+    port: 3000, // default: 3000
+    host: 'localhost', // default: localhost,
+    timing: false
+  },
+  target: 'client',
+  auth: {
+    cookie: {
+      prefix: 'auth.',
+      options: {
+        path: '/panel'
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: false,
+      home: '/panel'
+    },
+    strategies: {
+      'laravelJWT': {
+        provider: 'laravel/jwt',
+        url: "/api",
+        endpoints: {
+          login: {
+            url: '/login'
+          },
+          refresh: {
+            url:'/refresh'
+          },
+          logout: {
+            url: '/logout'
+          },
+          user: {
+            url: '/user'
+          }
+        },
+        token: {
+          property: 'access_token',
+          maxAge: 60 * 60
+        },
+        refreshToken: {
+          maxAge: 20160 * 60
+        },
+      },
+    }
+  },
+  //midleware
+  router: {
+    middleware: ['auth']
   }
 }

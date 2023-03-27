@@ -16,7 +16,7 @@
           href="#"
           aria-expanded="false"
         >
-          <i class="ri-shopping-cart-2-line"></i><span>Example</span
+          <i class="ri-shopping-cart-2-line"></i><span>Order</span
           ><i class="ri-arrow-right-s-line arrow-down ms-auto"></i>
         </a>
         <ul
@@ -26,10 +26,10 @@
           style=""
         >
           <li>
-            <nuxt-link to="/example"> <span>example</span> </nuxt-link>
+            <nuxt-link to="/order/list"> <span>Order List</span> </nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/404"> <span>404</span> </nuxt-link>
+            <nuxt-link to="/order/new"> <span>New Order</span> </nuxt-link>
           </li>
         </ul>
       </li>
