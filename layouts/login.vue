@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div v-if="mounted">
     <LayoutsFrontHeader />
     <Nuxt />
     <LayoutsFrontFooter />
+  </div>
+  <div v-else>
+    <Loader/>
   </div>
 </template>
 <script>
@@ -87,6 +90,19 @@ export default {
         { src: "/js/main.js", defer: true },
       ],
     };
+  },
+  data(){
+    return{
+      mounted:false,
+    }
+  },
+  mounted(){
+    if(this.$auth.loggedIn){
+      this.$router.push('/')
+    }
+    this.$nextTick(()=> {
+      this.mounted = true
+    })
   },
 };
 </script>

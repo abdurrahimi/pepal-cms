@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$auth.user.role!='admin'">
     <div class="pagetitle mb-3">
       <div class="row">
         <div class="col-md-8 mt-2">
@@ -310,8 +310,12 @@
       </div>
     </section>
   </div>
+  <OrderAdmin v-else/>
 </template>
 <script>
 export default {
+  mounted(){
+    console.log(this.$auth)
+  }
 }
 </script>

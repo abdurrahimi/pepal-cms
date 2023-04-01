@@ -34,7 +34,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    'vue-sweetalert2/nuxt'
+    'vue-sweetalert2/nuxt',
+    'cookie-universal-nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -56,26 +57,14 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
-  ssr: false,
+  ssr: true,
   server: {
     port: 3000, // default: 3000
     host: 'localhost', // default: localhost,
     timing: false
   },
-  target: 'client',
+  target: 'server',
   auth: {
-    cookie: {
-      prefix: 'auth.',
-      options: {
-        path: '/panel'
-      }
-    },
-    redirect: {
-      login: '/login',
-      logout: '/',
-      callback: false,
-      home: '/panel'
-    },
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
@@ -102,7 +91,34 @@ export default {
           maxAge: 20160 * 60
         },
       },
-    }
+      local: false,
+      cookie: {
+        token: {
+          property: "access_token",
+          required: true,
+          type: "Bearer",
+        },
+        user: {
+          property: "data",
+        },
+        endpoints: {
+          login: {
+            url: "/login",
+            method: "post",
+          },
+          logout: { url: "/logout", method: "delete" },
+          user: { url: "/user", method: "get" },
+        },
+      },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    },
+    watchLoggedIn: true,
+    rewriteRedirects: true,
   },
   //midleware
   router: {

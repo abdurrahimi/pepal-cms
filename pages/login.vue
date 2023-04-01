@@ -96,20 +96,18 @@ export default {
             }
         }
     },
-    mounted(){
-        if(this.$auth.loggedIn){
-            this.$router.push({ path: '' })
-        }
-    },
     methods:{
         async handleSubmit(e){
+          console.log('okok')
             this.submitting = true
             this.$auth.loginWith('laravelJWT', {data:this.form})
-            .then(() =>{
-                this.$router.push({ path: '' })
+            .then((res) =>{
+              this.$cookies.set('access_token', res.access_token)
+                this.$auth.redirect('login')
                 this.submitting = false
             })
             .catch((err) =>{
+                console.log("gagal"+err.message())
                 this.submitting = false
                 if(err.response.hasOwnProperty('status') && err.response.status === 422){
                     this.error = err.response.data
