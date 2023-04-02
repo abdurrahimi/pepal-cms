@@ -103,7 +103,7 @@ export default {
             this.$auth.loginWith('laravelJWT', {data:this.form})
             .then((res) =>{
               this.$cookies.set('access_token', res.access_token)
-                this.$router.push('/login')
+                window.location.href = '/dashboard'
                 this.submitting = false
             })
             .catch((err) =>{
