@@ -227,7 +227,7 @@
                         <div class="d-grid gap-3">
                           <div class="form-group">
                             <label for="input-nominal" class="form-label">Nominal Saldo PayPal ($)</label>
-                            <input type="text" name="nominal-top-up" value="50" placeholder="Masukkan nominal yang dibeli ($)" id="nominal-top-up" class="form-control" />
+                            <input type="text" name="nominal-top-up" v-model="paypalValue" placeholder="Masukkan nominal yang dibeli ($)" id="nominal-top-up" class="form-control" />
                           </div>
                           <div class="form-group">
                             <label for="input-country-account" class="form-label">Akun PayPal</label>
@@ -242,13 +242,13 @@
                           </div>
                           <div id="result_calculate" data-wow-duration="0.5s" data-wow-delay=".1s">
                             <!-- ini harusnya di hide dulu, kalau di klik hitung baru muncul // hide start -->
-                            Estimasi yang diterima : <span class="fw-bold" id="result_estimate">$50</span><br/>
+                            Estimasi yang diterima : <span class="fw-bold" id="result_estimate">{{ paypalValue }}</span><br/>
                             Nominal yang harus dibayar : <span class="fw-bold" id="result_pay">Rp.755.000</span><br/>
                             <br/>
                             <a href="#" id="buy_btn" target="_blank" class="sec-btn">Order Sekarang</a>
                             <!-- hide end -->
                           </div>
-                          <button type="submit" class="ud-main-btn ud-white-btn mt-2">Hitung</button>
+                          <button type="button" class="ud-main-btn ud-white-btn mt-2" @click="hitungtopup">Hitung</button>
                         </div>
                       </form>
                     </div>
@@ -313,11 +313,11 @@
                         <div class="d-grid gap-3">
                           <div class="form-group">
                             <label for="input-nominal" class="form-label">Harga item yang anda beli ($)</label>
-                            <input type="text" name="nominal-bayar" value="50" placeholder="Masukkan harga item yang ingin dibeli" id="input-nominal-bayar" class="form-control" />
+                            <input type="text" name="nominal-bayar" v-model="jasabayarValue" placeholder="Masukkan harga item yang ingin dibeli" id="input-nominal-bayar" class="form-control" />
                           </div>
                           <div class="form-group">
                             <label for="input-rate" class="form-label">Rate PayPal</label>
-                            <input type="text" name="rate" value="15100" id="rate-bayar" class="form-control" disabled />
+                            <input type="text" name="rate" :value="rate" id="rate-bayar" class="form-control" disabled />
                           </div>
                           <div id="result_calculate" data-wow-duration="0.5s" data-wow-delay=".1s">
                             <!-- ini harusnya di hide dulu, kalau di klik hitung baru muncul // hide start -->
@@ -548,6 +548,23 @@
 export default {
   name: 'IndexPage',
   layout: 'main',
-  auth:false
+  auth:false,
+  data(){
+    return{
+      rate:0,
+      jasabayarValue:50,
+      paypalValue:50,
+    }
+  },
+  async mounted(){
+    await this.getRate()
+  },
+  methods:{
+    async getRate() {
+      const { data } = await this.$axios.get("/api/get-rate");
+      console.log(data)
+      this.rate = data.rate;
+    },
+  }
 }
 </script>
