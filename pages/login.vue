@@ -107,12 +107,10 @@ export default {
                 this.submitting = false
             })
             .catch((err) =>{
-                console.log("gagal"+err.message())
                 this.submitting = false
                 if(err.response.hasOwnProperty('status') && err.response.status === 422){
                     this.error = err.response.data
                 }
-
                 if(err.response.hasOwnProperty('status') && err.response.status === 401)
                     alert('Please check username & password')
             })

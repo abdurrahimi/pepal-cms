@@ -2,7 +2,7 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/">
+        <nuxt-link class="nav-link" to="/dashboard">
           <i class="ri-dashboard-fill"></i>
           <span>Dashboard</span>
         </nuxt-link>
