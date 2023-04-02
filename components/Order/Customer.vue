@@ -44,21 +44,21 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">
-                Customer Detail (ini diambil dari data customer)
+                Customer Detail
               </h5>
               <table class="table table-borderless">
                 <tbody>
                   <tr>
                     <td>Nama</td>
-                    <td>Susanto</td>
+                    <td>{{ data?.user?.name }}</td>
                   </tr>
                   <tr>
                     <td>Email</td>
-                    <td>nagakan@gmail.com</td>
+                    <td>{{ data?.user?.email }}</td>
                   </tr>
                   <tr>
                     <td>Telp/Wa</td>
-                    <td>08298483001</td>
+                    <td>{{ data?.user?.phone }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -74,16 +74,16 @@
                 <tbody>
                   <tr>
                     <td>Invoice</td>
-                    <td>No INV</td>
+                    <td>{{ data?.invoice_no }}</td>
                   </tr>
                   <tr>
                     <td>Tanggal</td>
-                    <td>23 January 2023, 10:1:25</td>
+                    <td>{{ new Date(data?.created_at).toLocaleString() }}</td>
                   </tr>
                   <tr>
                     <td>Pembayaran</td>
                     <td>
-                      Bank BCA <span class="badge bg-danger">Unpaid</span>
+                      {{ data?.pembayaran }} <Status :status="data?.status" />
                     </td>
                   </tr>
                 </tbody>
@@ -111,30 +111,75 @@
                 <tbody>
                   <tr>
                     <td class="text-start">
-                      Top Up Paypal
+                      <span v-if="data.tipe == 'paypal'">Top Up Paypal</span>
+                      <span v-if="data.tipe == 'bayar'">Jasa Bayar</span>
                       <!--Mungkin diisi akun Paypalnya -->
                       <br />
-                      <small> - akunpp1@gmail.com</small>
+                      <small> - {{ data?.target }}</small>
                     </td>
-                    <td class="text-end">$50.00</td>
-                    <td class="text-end">Rp 15.900</td>
-                    <td class="text-end">Rp 795.000</td>
+                    <td class="text-end">
+                      {{
+                        new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        }).format(data.nominal)
+                      }}
+                    </td>
+                    <td class="text-end">
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(data?.rate?.rate)
+                      }}
+                    </td>
+                    <td class="text-end">
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(data?.rate?.rate * data.nominal)
+                      }}
+                    </td>
                   </tr>
                   <tr>
                     <td colspan="3" class="text-end fw-bold">Sub Total</td>
-                    <td class="text-end">xxxxxx</td>
+                    <td class="text-end">
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(data?.rate?.rate * data.nominal)
+                      }}
+                    </td>
                   </tr>
-                  <tr>
+                  <tr v-if="data?.tipe == 'bayar'">
                     <td colspan="3" class="text-end fw-bold">Fee</td>
-                    <td class="text-end">xxxxxx</td>
+                    <td class="text-end">Masih dalam pengerjaan</td>
                   </tr>
                   <tr>
                     <td colspan="3" class="text-end fw-bold">Discount</td>
-                    <td class="text-end">xxxxxx</td>
+                    <td class="text-end">
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(data?.diskon)
+                      }}
+                    </td>
                   </tr>
                   <tr>
                     <td colspan="3" class="text-end fw-bold">Total</td>
-                    <td class="text-end fw-bold">xxxx</td>
+                    <td class="text-end fw-bold">
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(
+                          data?.rate?.rate * data.nominal - data?.diskon
+                        )
+                      }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -148,16 +193,16 @@
                 <tbody>
                   <tr>
                     <td>
-                      <strong>Akun PayPal:</strong> (jika topup, echo "Akun
-                      Paypal", sebaliknya jika jasa bayar echo "Link/Akun
-                      Pembayaran"<br />
-                      <p>akunpp1@gmail.com</p>
+                      <strong v-if="data.tipe == 'paypal'">Akun PayPal:</strong>
+                      <strong v-else>Link Pembayaran:</strong><br />
+                      <p>{{ data?.target }}</p>
                     </td>
                   </tr>
+
                   <tr>
                     <td>
                       <strong>Pesan:</strong><br />
-                      <p>Misal info login, alamat pengiriman, dll</p>
+                      <p>{{ data?.pesan }}</p>
                     </td>
                   </tr>
                 </tbody>
@@ -177,36 +222,32 @@
                   <h5 class="card-title">Order History</h5>
                 </div>
               </div>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <td class="text-start">Date Added</td>
-                    <td class="text-start">Comment</td>
-                    <td class="text-start">Status</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-start">23 January 2023, 10:1:25</td>
-                    <td class="text-start">
-                      Pembayaran Sudah Kami Terima dan segera proses orderan
-                      anda
-                    </td>
-                    <td class="text-start">
-                      <span class="badge bg-info">Processing</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-start">23 January 2023, 10:21:16</td>
-                    <td class="text-start">
-                      Sudah saya kirim berikut link screenshotnya:
-                    </td>
-                    <td class="text-start">
-                      <span class="badge bg-success">Completed</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <table
+                  class="table table-bordered"
+                  v-if="data?.history?.length > 0"
+                >
+                  <thead>
+                    <tr>
+                      <td class="text-start">Date Added</td>
+                      <td class="text-start">Comment</td>
+                      <td class="text-start">Status</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, key) in data.history" :key="key">
+                      <td class="text-start">
+                        {{ new Date(item.created_at).toLocaleString() }}
+                      </td>
+                      <td class="text-start">
+                        <div v-html="item.pesan"></div>
+                      </td>
+                      <td class="text-start">
+                        <Status :status="item.status" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div v-else class="text-muted"><i>Belum ada history</i></div>
             </div>
           </div>
         </div>
@@ -311,3 +352,8 @@
     </section>
   </div>
 </template>
+<script>
+export default {
+  props: ["data"],
+}
+</script>
