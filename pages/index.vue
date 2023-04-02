@@ -36,7 +36,12 @@
             <div class="box-head">
               <div class="box-content">
                 <div class="box">
-                  <div class="kurs">Rate: Rp 15.900</div>
+                  <div class="kurs">Rate: {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(rate)
+                      }}</div>
                 </div>
               </div>
             </div>

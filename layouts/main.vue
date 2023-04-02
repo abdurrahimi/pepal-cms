@@ -87,7 +87,7 @@ export default {
           src: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js",
         },
         { src: "/js/wow.min.js", defer: true },
-        { src: "/js/main.js", defer: true },
+        { src: "/js/main2.js", defer: true },
       ],
     };
   },
