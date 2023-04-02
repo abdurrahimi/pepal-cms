@@ -100,9 +100,9 @@ export default {
     if(this.$auth.loggedIn){
       this.$router.push('/')
     }
-    this.$nextTick(()=> {
+    setTimeout(()=> {
       this.mounted = true
-    })
+    },300)
   },
 };
 </script>
