@@ -570,6 +570,9 @@ export default {
       console.log(data)
       this.rate = data.rate;
     },
+    hitungtopup(){
+      
+    }
   }
 }
 </script>
