@@ -27,22 +27,28 @@
               <div class="card-body">
                 <div class="card-title">Top Up Paypal Form</div>
                 <!-- Horizontal Form -->
-
+                <div
+                  v-if="error.message && error?.message != ''"
+                  class="alert alert-danger"
+                  role="alert"
+                >
+                  {{ error?.message }}
+                </div>
                 <div class="form-group">
                   <div class="row">
                     <div class="col-8">
                       <label class="col-form-label"
                         >Nominal (Min: $30, Max:$2000)</label
                       >
-                      <span class="badge bg-info"
-                        ><i
+                      <span class="badge bg-info">
+                        <i
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          data-custom-class="custom-tooltip"
+                          title="Pesan akan kami tulis di berita pengiriman saldo. Isi pesan jika ada. Hindari kata bayar/beli."
                           class="ri-question-line"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          data-bs-custom-class="custom-tooltip"
-                          data-bs-title="Gunakan (.) untuk input desimal, sampai 2 angka desimal, misal 30.45"
-                        ></i>
-                      </span>
+                        ></i
+                      ></span>
                       <input
                         type="number"
                         name="nominal"
@@ -56,7 +62,13 @@
                     </div>
                     <div class="col-4">
                       <label class="col-form-label fw-bold fs-5"
-                        >Rate: Rp16.000/$</label
+                        >Rate:
+                        {{
+                          new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(rate)
+                        }}/$</label
                       >
                     </div>
                   </div>
@@ -66,10 +78,10 @@
                   <span class="badge bg-info"
                     ><i
                       class="ri-question-line"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      data-bs-custom-class="custom-tooltip"
-                      data-bs-title="Boleh diisi link atau email. Prefer email"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-custom-class="custom-tooltip"
+                      title="Boleh diisi link atau email. Prefer email"
                     ></i>
                   </span>
                   <input
@@ -121,10 +133,10 @@
                   <span class="badge bg-info"
                     ><i
                       class="ri-question-line"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      data-bs-custom-class="custom-tooltip"
-                      data-bs-title="Pesan akan kami tulis di berita pengiriman saldo. Isi pesan jika ada. Hindari kata bayar/beli."
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-custom-class="custom-tooltip"
+                      title="Pesan akan kami tulis di berita pengiriman saldo. Isi pesan jika ada. Hindari kata bayar/beli."
                     ></i>
                   </span>
                   <textarea
@@ -238,8 +250,12 @@
                 </div>
               </div>
               <div class="text-center mb-4">
-                <button v-if="!submit" type="submit" class="btn btn-primary">Order</button>
-                <button v-else type="button" class="btn btn-primary" disabled>Processsing...</button>
+                <button v-if="!submit" type="submit" class="btn btn-primary">
+                  Order
+                </button>
+                <button v-else type="button" class="btn btn-primary" disabled>
+                  Processsing...
+                </button>
                 <a href="order-dashboard.html" class="btn btn-secondary"
                   >Cancel</a
                 >
@@ -255,45 +271,52 @@
 export default {
   data() {
     return {
-      submit:false,
-      rate: 16000,
+      submit: false,
+      rate: 0,
       discount: 0,
       form: {
         nominal: 0.0,
         akun: "",
+        rate: 1,
         kupon: "",
         metode: "bca",
         pesan: "",
-        order:"paypal",
+        order: "paypal",
         setuju: false,
       },
-    }
+      error: {},
+    };
   },
-  mounted(){
-
+  async mounted() {
+    await this.getRate()
+    $('[data-toggle="tooltip"]').tooltip();
   },
-  methods:{
-    submitEvent(){
-      this.submit = true
-      this.$axios.$post('/api/order',this.form)
-        .then(res => {
-          this.$swal.fire(
-            'Success',
-            'Pesananmu telah disimpan',
-            'success'
-          )
-          this.submit = false
-          this.$router.push('/order/list')
+  methods: {
+    async getRate() {
+      const { data } = await this.$axios.get("/api/get-rate");
+      console.log(data)
+      this.form.rate = data.id;
+      this.rate = data.rate;
+    },
+    submitEvent() {
+      this.error = {};
+      this.submit = true;
+      this.$axios
+        .$post("/api/order", this.form)
+        .then((res) => {
+          this.$swal.fire("Success", "Pesananmu telah disimpan", "success");
+          this.submit = false;
+          this.$router.push("/order/list");
         })
-        .catch(err => {
-          this.$swal.fire(
-            'Failed',
-            'Terjadi error',
-            'error'
-          )
-          this.submit = false
-        })
-    }
-  }
+        .catch((err) => {
+          if (err.response.status == 400) {
+            this.error = err.response.data;
+            window.scrollTo(0, 0);
+          }
+          this.$swal.fire("Failed", "Terjadi error", "error");
+          this.submit = false;
+        });
+    },
+  },
 };
 </script>

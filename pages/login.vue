@@ -81,7 +81,7 @@
 </template>
 <script>
 export default {
-    layout:"login",
+    layout:"main",
     auth:false,
     data(){
         return{

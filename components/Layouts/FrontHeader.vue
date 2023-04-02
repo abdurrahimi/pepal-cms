@@ -32,12 +32,12 @@
                         <nuxt-link to="/layanan/topup" class="ud-submenu-link">Jasa Top Up PayPal</nuxt-link>
                     </li>
                     <li class="ud-submenu-item">
-                      <a
-                        href="jasa-pembayaran-online.php"
+                      <nuxt-link
+                        to="/layanan/jasa-pembayaran-online"
                         class="ud-submenu-link"
                       >
                         Jasa Pembayaran Online
-                      </a>
+                      </nuxt-link>
                     </li>
                   </ul>
                 </li>
@@ -52,7 +52,7 @@
                 <!-- mainkan hiding visible elements end -->
               </ul>
             </div>
-            <div class="navbar-btn">
+            <div class="navbar-btn" v-if="!$auth.loggedIn">
               <!-- mainkan hiding visible elements start -->
               <nuxt-link
                 to="/login"
@@ -61,14 +61,23 @@
               >
                 Masuk
             </nuxt-link>
-              <a
-                href="register.php"
+              <nuxt-link
+                to="/register"
                 class="ud-main-btn ud-white-btn d-none d-md-inline-block"
                 aria-label="Daftar"
               >
                 Daftar
-              </a>
+              </nuxt-link>
               <!-- mainkan hiding visible elements end -->
+            </div>
+            <div v-else>
+              <nuxt-link
+                to="/dashboard"
+                class="ud-main-btn ud-white-btn d-none d-md-inline-block"
+                aria-label="Dashboard"
+              >
+                Dashboard
+              </nuxt-link>
             </div>
           </nav>
         </div>

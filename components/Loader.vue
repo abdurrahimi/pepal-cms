@@ -11,7 +11,5 @@
     text-align: center;
     min-height: 100vh;
   }
-  .main{
-    min-height: 84vh;
-  }
+
 </style>

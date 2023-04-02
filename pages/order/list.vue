@@ -164,6 +164,7 @@ export default {
   methods: {
     loadDatatable() {
       var token = this.$auth.strategy.token.get();
+      var role = this.$auth.user.role;
       //Should implements serverside table
       window.table = $("#xxx").DataTable({
         serverSide: true,
@@ -185,7 +186,6 @@ export default {
           {
             data: null,
             render: function (data) {
-              console.log(data);
               return data.tipe == "paypal"
                 ? "<b>Top Up PayPal</b><br><i>" + data.target + "</i>"
                 : "Jasa Bayar<br><i>" + data.target + "</i>";
@@ -241,14 +241,15 @@ export default {
             data: "id",
             className:"text-center",
             render: function (data) {
-              return (
-                '<a href="/order/detail/' +
+              var btn = '<a href="/order/detail/' +
                 data +
                 '" data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-info btn-sm" aria-label="View" data-bs-original-title="View"><i class="ri-eye-fill"></i></a>' +
-                `&nbsp;<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Payment Confirmation" data-bs-original-title="Payment Confirmation" aria-describedby="tooltip143151">
+                `&nbsp;`
+                role == '!admin' ? btn+=
+                `<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Payment Confirmation" data-bs-original-title="Payment Confirmation" aria-describedby="tooltip143151">
                     <i data-bs-toggle="modal" data-bs-target="#order-id" class="ri-bank-card-fill"></i>
-                 </button>`
-              );
+                 </button>` : ""
+              return btn
             },
           },
         ],

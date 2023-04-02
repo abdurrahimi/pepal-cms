@@ -354,6 +354,7 @@ export default {
           defer: true,
         },
         { src: "/assets/js/main.js", defer: true },
+        { src : "/assets/vendor/tinymce/tinymce.min.js" }
       ],
     };
   },
