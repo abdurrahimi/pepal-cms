@@ -50,7 +50,7 @@ export default {
   layout: "main",
   auth:false,
   async asyncData({$axios}){
-    const post = await $axios.$get(`http://127.0.0.1:8000/api/v1/blog/post`)
+    const post = await $axios.$get(`http://165.22.255.134/api/blog/post`)
       return { post }
   },
 };
