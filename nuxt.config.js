@@ -51,7 +51,8 @@ export default {
   },
 
   proxy: {
-    '/api/': { target: process.env.API_URL, pathRewrite: {'^/api/': ''} }
+    '/api/': { target: process.env.API_URL, pathRewrite: {'^/api/': '/api/v1/'} },
+    '/files/image/' : { target: process.env.API_URL, pathRewrite: {'^/files/image/': '/storage/'} }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

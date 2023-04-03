@@ -6,7 +6,7 @@
           <h1 class="fs-5 mb-1">Order Info</h1>
           <nav>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <nuxt-link to="/dashboard">Home</nuxt-link>
               <li class="breadcrumb-item active">Order List</li>
             </ol>
           </nav>

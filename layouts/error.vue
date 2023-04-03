@@ -11,7 +11,7 @@
         <nuxt-link class="btn" to="/">Back to home</nuxt-link>
 
         <img
-          src="assets/img/not-found.svg"
+          src="/assets/img/not-found.svg"
           class="img-fluid py-5"
           alt="Page Not Found"
         />

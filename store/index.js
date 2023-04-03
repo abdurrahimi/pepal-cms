@@ -7,10 +7,11 @@ export const actions = {
           // check data user login with cookie
           var token = this.$cookies.get('auth._token.laravelJWT')
           this.$axios.setHeader('Authorization',token)
-          const { data } = await this.$axios.get('/user')
+          const { data } = await this.$axios.get('/api/v1/user')
           this.$auth.setUser(data)
         } catch (err) {
           auth = null
+          console.log(err)
         }
       }
     },

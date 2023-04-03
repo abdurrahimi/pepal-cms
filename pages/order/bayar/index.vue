@@ -49,7 +49,13 @@
                   </div>
                   <div class="col-4">
                     <label class="col-form-label fw-bold fs-5"
-                      >Rate: 16.030</label
+                      >Rate:
+                      {{
+                        new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(rate)
+                      }}/$</label
                     >
                   </div>
                 </div>
@@ -256,7 +262,19 @@
                     <!-- Jika ada fee, echo fee -->
                     <tr>
                       <td>Fee</td>
-                      <td class="text-end">Rp 30.000</td>
+                      <td class="text-end">
+                        {{
+                          new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(
+                            (
+                              rate * form.nominal - discount) * (4 / 100) > 30000
+                              ? (rate * form.nominal - discount) * (4 / 100)
+                              : 30000
+                          )
+                        }}
+                      </td>
                     </tr>
                     <!-- Jika ada discount, echo discount -->
                     <tr>
@@ -282,9 +300,13 @@
               </div>
             </div>
             <div class="text-center mb-4">
-              <a href="order-payment-method.html" class="btn btn-primary"
-                >Order</a
+              <button
+                type="submit"
+                @click="submitEvent()"
+                class="btn btn-primary"
               >
+                Order
+              </button>
               <a href="order-dashboard.html" class="btn btn-secondary"
                 >Cancel</a
               >
@@ -299,7 +321,7 @@
 export default {
   data() {
     return {
-      rate: 16030,
+      rate: 0,
       form: {
         nominal: 0,
         jenis: "personal",
@@ -309,20 +331,47 @@ export default {
         kupon: "",
         metode: "bca",
         keterangan: "",
-        order:"bayar",
+        order: "bayar",
       },
       discount: 0,
       validateVoucher: false,
       term: false,
     };
   },
-  mounter() {},
+  async mounted() {
+    await this.getRate();
+  },
   methods: {
+    async getRate() {
+      const { data } = await this.$axios.get("/api/get-rate");
+      console.log(data);
+      this.form.rate = data.id;
+      this.rate = data.rate;
+    },
     camalize(str) {
       return str
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]+(.)/g, function (match, chr) {
           return chr.toUpperCase();
+        });
+    },
+    submitEvent() {
+      this.error = {};
+      this.submit = true;
+      this.$axios
+        .$post("/api/order", this.form)
+        .then((res) => {
+          this.$swal.fire("Success", "Pesananmu telah disimpan", "success");
+          this.submit = false;
+          this.$router.push("/order/list");
+        })
+        .catch((err) => {
+          if (err.response.status == 400) {
+            this.error = err.response.data;
+            window.scrollTo(0, 0);
+          }
+          this.$swal.fire("Failed", "Terjadi error", "error");
+          this.submit = false;
         });
     },
   },

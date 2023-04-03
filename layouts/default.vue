@@ -6,15 +6,15 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <nuxt-link to="/dashboard" class="logo d-flex align-items-center">
           <img
-            src="assets/img/logo.png"
+            src="/assets/img/logo.png"
             width="29"
             height="26"
             alt="Logo Saldobit"
           />
           <span class="d-none d-lg-block">Saldobit</span>
-        </a>
+        </nuxt-link>
         <i class="ri-menu-fold-fill toggle-sidebar-btn"></i>
       </div>
       <!-- End Logo -->
@@ -99,7 +99,7 @@
               data-bs-toggle="dropdown"
             >
               <img
-                src="assets/img/profile-img.webp"
+                src="/assets/img/profile-img.webp"
                 alt="Profile"
                 width="36"
                 height="36"

@@ -2,25 +2,21 @@
   <section class="ud-blog-grids">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" v-for="(item,key) in post.data" :key="key">
           <div class="ud-single-blog">
             <div class="ud-blog-image">
-              <nuxt-link to="/blog/detail/contoh-title-article">
-                <img src="/images/blog/blog-01.jpg" alt="blog" />
+              <nuxt-link :to="'/blog/detail/'+item.slug">
+                <img :src="item.image" alt="blog" style="max-height: 234px"/>
               </nuxt-link>
             </div>
             <div class="ud-blog-content">
               <span class="ud-blog-date">Dec 22, 2023</span>
               <h3 class="ud-blog-title">
-                <nuxt-link to="/blog/detail/contoh-title-article">
-                  Kalau pakai lavarel titlenya diubah setiap huruf pertama jadi
-                  kapital
+                <nuxt-link :to="'/blog/detail/'+item.slug">
+                  {{ item.title }}
                 </nuxt-link>
               </h3>
-              <p class="ud-blog-desc">
-                Ini harusnya mengambil 200 karakter pertama dari $post->content,
-                kalau di laravel mungkin $content = Str::limit($post->content,
-                200);
+              <p class="ud-blog-desc" v-html="item.content">
               </p>
             </div>
           </div>
@@ -53,5 +49,17 @@
 export default {
   layout: "main",
   auth:false,
+  async asyncData({$axios}){
+    const post = await $axios.$get(`http://127.0.0.1:8000/api/v1/blog/post`)
+      return { post }
+  },
 };
 </script>
+<style scoped>
+.ud-blog-desc {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+</style>

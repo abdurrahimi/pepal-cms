@@ -6,7 +6,7 @@
           <h1 class="fs-5 mb-1">Order Info</h1>
           <nav>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><nuxt-link to="/dashboard">Home</nuxt-link></li>
               <li class="breadcrumb-item active">Order List</li>
             </ol>
           </nav>
@@ -195,7 +195,7 @@
               <div class="form-group mb-2 col-12 text-center">
                 <div v-if="data.bukti != '' && data.bukti != null">
                   <img
-                    src="assets/img/preview.png"
+                    src="/assets/img/preview.png"
                     width="200"
                     height="200"
                     alt=""
