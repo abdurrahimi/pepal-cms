@@ -6,19 +6,10 @@
 </template>
 <script>
 export default {
-  data(){
-    return{
-      data:{}
-    }
-  },
-  mounted(){
-    this.getDetail()
-  },
-  methods: {
-    async getDetail(){
-      const { data } = await this.$axios.get(`/api/order/${this.$route.params.id}`)
-      this.data = data
-    }
+  async asyncData({$axios,$config, route}){
+    $axios.setBaseURL($config.baseURL);
+    const { data }  = await $axios.get(`/api/v1/order/${route.params.id}`)
+    return { data }
   }
 }
 </script>

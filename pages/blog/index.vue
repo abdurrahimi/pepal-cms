@@ -2,45 +2,48 @@
   <section class="ud-blog-grids">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6" v-for="(item,key) in post.data" :key="key">
+        <div
+          class="col-lg-4 col-md-6"
+          v-for="(item, key) in post.data"
+          :key="key"
+        >
           <div class="ud-single-blog">
             <div class="ud-blog-image">
-              <nuxt-link :to="'/blog/detail/'+item.slug">
-                <img :src="item.image" alt="blog" style="max-height: 234px"/>
+              <nuxt-link :to="'/blog/detail/' + item.slug">
+                <img :src="item.image" alt="blog" style="max-height: 234px" />
               </nuxt-link>
             </div>
             <div class="ud-blog-content">
               <span class="ud-blog-date">Dec 22, 2023</span>
               <h3 class="ud-blog-title">
-                <nuxt-link :to="'/blog/detail/'+item.slug">
+                <nuxt-link :to="'/blog/detail/' + item.slug">
                   {{ item.title }}
                 </nuxt-link>
               </h3>
-              <p class="ud-blog-desc" v-html="item.content">
-              </p>
+              <p class="ud-blog-desc" v-html="item.content"></p>
             </div>
           </div>
         </div>
         <div class="">
-            <ul class="pagination">
-              <li class="icon">
-                <a href="#"><span class="ri-arrow-left-s-line"></span>Prev</a>
-              </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">6</a></li>
-              <li><a href="#">7</a></li>
-              <li><a href="#">8</a></li>
-              <li><a href="#">9</a></li>
-              <li><a href="#">10</a></li>
-              <li class="icon">
-                <a href="#">Next<span class="ri-arrow-right-s-line"></span></a>
-              </li>
-            </ul>
-          </div>
+          <ul class="pagination">
+            <li class="icon">
+              <a href="#"><span class="ri-arrow-left-s-line"></span>Prev</a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#">9</a></li>
+            <li><a href="#">10</a></li>
+            <li class="icon">
+              <a href="#">Next<span class="ri-arrow-right-s-line"></span></a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -48,10 +51,14 @@
 <script>
 export default {
   layout: "main",
-  auth:false,
-  async asyncData({$axios}){
-    const post = await $axios.$get(`http://165.22.255.134/api/blog/post`)
-      return { post }
+  auth: false,
+  async asyncData({ $axios, $config }) {
+    $axios.setBaseURL($config.baseURL);
+    const post = await $axios.$get(`/api/v1/blog/post`);
+    return { post };
+  },
+  mounted() {
+    console.log("okok2");
   },
 };
 </script>

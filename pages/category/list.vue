@@ -194,6 +194,9 @@ export default {
     };
   },
   async mounted() {
+    if(this.$auth.user.role != 'admin'){
+      this.$router.replace('/404')
+    }
     window.editCategory = this.editCategory;
     window.deleteCategory = this.deleteCategory;
     setTimeout(() => this.loadDatatable(), 500);

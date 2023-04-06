@@ -55,9 +55,41 @@
 <script>
 export default {
   async mounted() {
+    window.edit = this.edit;
+    window.deleteData = this.deleteData
     setTimeout(() => this.loadDatatable(), 500);
   },
   methods: {
+    edit(id){
+      this.$router.push('/post/edit/'+id)
+    },
+    deleteData(id){
+      this.$swal
+        .fire({
+          title: "Yakin menghapus data ?",
+          showDenyButton: false,
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            this.$axios
+              .delete("/api/post/" + id)
+              .then((res) => {
+                this.$swal.fire(
+                  "Success",
+                  "Postingan berhasil dihapus",
+                  "success"
+                );
+                table.ajax.reload();
+              })
+              .catch((err) => {
+                this.$swal.fire("Failed", "Terjadi error!", "error");
+              });
+          }
+        });
+    },
     loadDatatable() {
       var token = this.$auth.strategy.token.get();
       var role = this.$auth.user.role;
@@ -81,7 +113,7 @@ export default {
           {
             data: "image",
             render: function (data) {
-              return `<img src="${data}" class="img-thumbnail"/>`;
+              return `<img src="${data}" class="img-thumbnail" style='max-width:100px'/>`;
             },
           },
           {
@@ -118,19 +150,13 @@ export default {
             },
           },
           {
-            data: "id",
+            data: null,
             className: "text-center",
             render: function (data) {
-              var btn =
-                '<a href="/order/detail/' +
-                data +
-                '" data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-info btn-sm" aria-label="View" data-bs-original-title="View"><i class="ri-eye-fill"></i></a>' +
-                `&nbsp;`;
-              role != "admin"
-                ? (btn += `<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Payment Confirmation" data-bs-original-title="Payment Confirmation" aria-describedby="tooltip143151">
-                    <i data-bs-toggle="modal" data-bs-target="#order-id" class="ri-bank-card-fill"></i>
-                 </button>`)
-                : "";
+              //console.log(data)
+              var btn ='<a href="/blog/detail/' +data.slug +'" target="_blank" class="btn btn-info btn-sm" aria-label="View" title="View"><i class="ri-eye-fill"></i></a>' +`&nbsp;`;
+              btn += `<button class='btn btn-warning btn-sm' onclick='edit(${data.id})'><i class='ri-edit-line'></i></button>&nbsp;`;
+              btn += `<button class='btn btn-danger btn-sm' onclick='deleteData(${data.id})'><i class='ri-delete-bin-2-line'></i></button>`;
               return btn;
             },
           },

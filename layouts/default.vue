@@ -282,6 +282,7 @@ export default {
     async logout() {
       this.$cookies.removeAll()
       await this.$auth.logout(/* .... */);
+      this.$router.push('/');
     },
   },
 };

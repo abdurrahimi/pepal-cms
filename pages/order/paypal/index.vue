@@ -120,12 +120,12 @@
                     required
                   >
                     <option value="" disabled>Silahkan Pilih...</option>
-                    <option value="bca">BCA</option>
-                    <option value="mandiri">Mandiri</option>
+                    <option v-for="(item,key) in pembayaran" :value="item?.id" :key="key">{{ item?.bank }}</option>
+<!--                     <option value="mandiri">Mandiri</option>
                     <option value="bni">BNI</option>
                     <option value="bri">BRI</option>
                     <option value="jago">Jago</option>
-                    <option value="jenius">Jenius</option>
+                    <option value="jenius">Jenius</option> -->
                   </select>
                 </div>
                 <div class="form-group mb-3">
@@ -279,22 +279,27 @@ export default {
         akun: "",
         rate: 1,
         kupon: "",
-        metode: "bca",
+        metode: "",
         pesan: "",
         order: "paypal",
         setuju: false,
       },
+      pembayaran:{},
       error: {},
     };
   },
   async mounted() {
     await this.getRate()
+    await this.getPembayaran()
     $('[data-toggle="tooltip"]').tooltip();
   },
   methods: {
+    async getPembayaran(){
+      const { data } = await this.$axios.get("/api/bank");
+      this.pembayaran = data
+    },
     async getRate() {
       const { data } = await this.$axios.get("/api/get-rate");
-      console.log(data)
       this.form.rate = data.id;
       this.rate = data.rate;
     },

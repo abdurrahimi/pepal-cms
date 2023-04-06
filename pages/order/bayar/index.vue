@@ -113,7 +113,7 @@
                   <input
                     type="text"
                     name="link_produk"
-                    v-model="form.link"
+                    v-model="form.akun"
                     value=""
                     placeholder="Link produk/web"
                     id="input-link-produk"
@@ -170,12 +170,7 @@
                     name="bank"
                   >
                     <option value="" disabled>Silahkan Pilih...</option>
-                    <option value="bca">BCA</option>
-                    <option value="mandiri">Mandiri</option>
-                    <option value="bni">BNI</option>
-                    <option value="bri">BRI</option>
-                    <option value="jago">Jago</option>
-                    <option value="jenius">Jenius</option>
+                    <option v-for="(item,key) in pembayaran" :value="item?.id" :key="key">{{ item?.bank }}</option>
                   </select>
                 </div>
                 <div class="form-group mb-3">
@@ -190,7 +185,7 @@
                     ></i>
                   </span>
                   <textarea
-                    v-model="form.keterangan"
+                    v-model="form.akun"
                     name="keterangan"
                     rows="5"
                     placeholder="Keterangan"
@@ -206,7 +201,7 @@
                         type="checkbox"
                         value=""
                         id="invalidCheck2"
-                        v-model="terms"
+                        v-model="form.terms"
                         required
                       />
                       <label class="form-check-label" for="invalidCheck2">
@@ -246,7 +241,7 @@
                     </tr>
                     <tr>
                       <td>Pembayaran</td>
-                      <td class="text-end">{{ form.metode.toUpperCase() }}</td>
+                      <td class="text-end">{{ pembayaran.filter(v => v.id == form.metode)[0]?.bank }}</td>
                     </tr>
                     <tr>
                       <td>Rate</td>
@@ -325,14 +320,14 @@ export default {
       form: {
         nominal: 0,
         jenis: "personal",
-        paypal: "",
-        link: "",
+        akun: "",
         invoice: "",
         kupon: "",
-        metode: "bca",
+        metode: "",
         keterangan: "",
         order: "bayar",
       },
+      pembayaran:[],
       discount: 0,
       validateVoucher: false,
       term: false,
@@ -340,11 +335,15 @@ export default {
   },
   async mounted() {
     await this.getRate();
+    await this.getPembayaran()
   },
   methods: {
+    async getPembayaran(){
+      const { data } = await this.$axios.get("/api/bank");
+      this.pembayaran = data
+    },
     async getRate() {
       const { data } = await this.$axios.get("/api/get-rate");
-      console.log(data);
       this.form.rate = data.id;
       this.rate = data.rate;
     },

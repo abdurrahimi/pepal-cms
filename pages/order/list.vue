@@ -188,7 +188,7 @@ export default {
             render: function (data) {
               return data.tipe == "paypal"
                 ? "<b>Top Up PayPal</b><br><i>" + data.target + "</i>"
-                : "Jasa Bayar<br><i>" + data.target + "</i>";
+                : "<b>Jasa Bayar</b><br><i>" + data.target + "</i>";
             },
           },
           {
@@ -254,6 +254,12 @@ export default {
           },
         ],
       });
+      table.on('draw.dt', function () {
+        var info = table.page.info();
+        table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1 + info.start;
+        });
+    });
     },
   },
 };
