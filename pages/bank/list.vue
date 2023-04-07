@@ -73,14 +73,9 @@ export default {
     if (this.$auth.user.role != "admin") {
       this.$router.replace("/404");
     }
-    window.editCategory = this.editCategory;
-    window.deleteCategory = this.deleteCategory;
     setTimeout(() => this.loadDatatable(), 500);
   },
   methods: {
-    addNew() {
-      $("#category-modal").modal("show");
-    },
     submitHandler() {
       this.submit.category = true;
       this.$axios
@@ -91,30 +86,6 @@ export default {
           };
           $("#category-modal").modal("hide");
           this.submit.category = false;
-          this.$swal.fire("Success", "Category berhasil disimpan", "success");
-          table.ajax.reload();
-        })
-        .catch((err) => {
-          this.$swal.fire("Failed", "Terjadi error!", "error");
-        });
-    },
-    editCategory(id, category) {
-      this.edit = {
-        id: id,
-        category: category,
-      };
-      $("#category-modal-edit").modal("show");
-    },
-    submitEditHandler() {
-      this.submit.category = true;
-      this.$axios
-        .patch("/api/category/" + this.edit.id, this.edit)
-        .then((res) => {
-          this.edit = {
-            category: "",
-          };
-          $("#category-modal-edit").modal("hide");
-          this.submit.edit = false;
           this.$swal.fire("Success", "Category berhasil disimpan", "success");
           table.ajax.reload();
         })
@@ -151,7 +122,6 @@ export default {
     },
     loadDatatable() {
       var token = this.$auth.strategy.token.get();
-      var role = this.$auth.user.role;
       window.deleteBank = this.deleteBank
       //Should implements serverside table
       window.table = $("#xxx").DataTable({

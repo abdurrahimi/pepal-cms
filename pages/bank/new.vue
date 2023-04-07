@@ -83,7 +83,6 @@
 </template>
 <script>
 export default {
-  components: { Multiselect, DatePicker },
   data() {
     return {
       submit: false,
