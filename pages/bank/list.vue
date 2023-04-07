@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="pagetitle">
-      <h1 class="fs-5 mb-1">Category List</h1>
+      <h1 class="fs-5 mb-1">Bank List</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><nuxt-link to="/">Home</nuxt-link></li>
-          <li class="breadcrumb-item active">Category List</li>
+          <li class="breadcrumb-item active">Bank List</li>
         </ol>
       </nav>
     </div>
@@ -17,7 +17,7 @@
             <div class="card-body col-lg-12 row">
               <!-- Line Chart -->
               <div class="d-flex justify-content-between">
-                <span class="card-title">Category List</span>
+                <span class="card-title">Bank List</span>
                 <nuxt-link
                   style="margin: 20px; margin-right: 0px"
                   type="button"
