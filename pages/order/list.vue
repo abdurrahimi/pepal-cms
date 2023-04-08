@@ -245,10 +245,6 @@ export default {
                 data +
                 '" data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-info btn-sm" aria-label="View" data-bs-original-title="View"><i class="ri-eye-fill"></i></a>' +
                 `&nbsp;`
-                role != 'admin' ? btn+=
-                `<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Payment Confirmation" data-bs-original-title="Payment Confirmation" aria-describedby="tooltip143151">
-                    <i data-bs-toggle="modal" data-bs-target="#order-id" class="ri-bank-card-fill"></i>
-                 </button>` : ""
               return btn
             },
           },
