@@ -6,115 +6,31 @@
           <div class="col-lg-8">
             <div class="ud-blog-details-content">
               <h2 class="ud-blog-details-title">
-                Facing a challenge is kind of a turn-on for an easy rider
+                {{ data.title }}
               </h2>
               <div class="ud-blog-overlay-content">
                 <div class="ud-blog-author">
-                  <span>Oleh Samuyl Joshi</span>
+                  <span>Oleh Administrator</span>
                 </div>
                 <div class="ud-blog-meta">
                   <p class="date">
-                    <i class="ri-calendar-line"></i> <span>12 Jan 2024</span>
+                    <i class="ri-calendar-line"></i>
+                    <span>{{
+                      new Date(data.date_published).toLocaleString()
+                    }}</span>
                   </p>
                   <p class="view">
-                    <i class="ri-eye-line"></i> <span>35</span>
+                    <i class="ri-eye-line"></i> <span>{{ data.views }}</span>
                   </p>
                 </div>
               </div>
               <div class="mb-5 py-1 px-1">
-                <img
-                  src="/images/blog/blog-details-01.jpg"
-                  alt="blog details"
-                />
+                <img class="img-custom" :src="data.image" alt="blog details" />
               </div>
-              <p class="ud-blog-details-para">
-                There’s a time and place for everything… including asking for
-                reviews. For instance: you should not asking for a review on
-                your checkout page. The sole purpose of this page is to guide
-                your customer to complete their purchase, and this means that
-                the page should be as minimalist and pared-down possible. You
-                don’t want to have any unnecessary elements or Call To Actions.
-              </p>
-              <p class="ud-blog-details-para">
-                There’s a time and place for everything… including asking for
-                reviews. For instance: you should not asking for a review on
-                your checkout page. The sole purpose of this page is to guide
-                your customer to complete their purchase, and this means that
-                the page should be as minimalist and pared-down possible. You
-                don’t want to have any unnecessary elements or Call To Actions.
-              </p>
-              <h3 class="ud-blog-details-subtitle">Sea no quidam vulputate</h3>
-              <p class="ud-blog-details-para">
-                At quo cetero fastidii. Usu ex ornatus corpora sententiae,
-                vocibus deleniti ut nec. Ut enim eripuit eligendi est, in
-                iracundia signiferumque quo. Sed virtute suavitate suscipiantur
-                ea, dolor this can eloquentiam ei pro. Suas adversarium
-                interpretaris eu sit, eum viris impedit ne. Erant appareat
-                corrumpit ei vel.
-              </p>
-
-              <blockquote class="blockstyle">
-                The Kadence Importer allows you to easily import all including
-                images, from any of our Kadence themes demos. When you install a
-                Kadence theme, the importer will automatically see what theme
-                you are using and give you options to import anyone of those
-                themes
-              </blockquote>
-
-              <h3 class="ud-blog-details-subtitle">
-                What is it with your ideas?
-              </h3>
-              <p class="ud-blog-details-para">
-                At quo cetero fastidii. Usu ex ornatus corpora sententiae,
-                vocibus deleniti ut nec. Ut enim eripuit eligendi est, in
-                iracundia signiferumque quo. Sed virtute suavitate suscipiantur
-                ea, dolor this can eloquentiam ei pro. Suas adversarium
-                interpretaris eu sit, eum viris impedit ne. Erant appareat
-                corrumpit ei vel.
-              </p>
-              <p class="ud-blog-details-para">
-                At quo cetero fastidii. Usu ex ornatus corpora sententiae,
-                vocibus deleniti ut nec. Ut enim eripuit eligendi est, in
-                iracundia signiferumque quo. Sed virtute suavitate suscipiantur
-                ea, dolor this can eloquentiam ei pro. Suas adversarium
-                interpretaris eu sit, eum viris impedit ne. Erant appareat
-                corrumpit ei vel.
-              </p>
-              <div class="ud-blog-details-action">
-                <ul class="ud-blog-tags">
-                  <li>
-                    <a href="#">Design</a>
-                  </li>
-                  <li>
-                    <a href="#">Development</a>
-                  </li>
-                  <li>
-                    <a href="#">Info</a>
-                  </li>
-                </ul>
-                <div class="ud-blog-share">
-                  <h6>Share This Post</h6>
-                  <ul class="ud-blog-share-links">
-                    <li>
-                      <a href="javascript:void(0)" class="facebook">
-                        <i class="ri-facebook-fill"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0)" class="twitter">
-                        <i class="ri-twitter-fill"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0)" class="linkedin">
-                        <i class="ri-linkedin-fill"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <div class="content" v-html="data.content"></div>
             </div>
           </div>
+
           <div class="col-lg-4">
             <div class="ud-blog-sidebar">
               <div class="ud-articles-box">
@@ -380,6 +296,22 @@
 <script>
 export default {
   layout: "main",
-  auth:false,
+  auth: false,
+  async asyncData({ $axios, $config, route }) {
+    $axios.setBaseURL($config.baseURL);
+    let { data } = await $axios.post(`/api/v1/blog/detail/`, {
+      slug: route.params.slug,
+    });
+    return { data };
+  },
 };
 </script>
+<style scoped>
+.content{
+  text-align: justify;
+  text-justify: inter-word;
+}
+.img-custom{
+  width: -webkit-fill-available;
+}
+</style>

@@ -54,10 +54,10 @@
     <script>
 export default {
   async mounted() {
-    /* if (this.$auth.user.role != "admin") {
+    if (this.$auth.user.role != "admin") {
         this.$router.replace("/404");
       }
-      window.deleteCategory = this.deleteCategory; */
+     /*  window.deleteCategory = this.deleteCategory; */
     setTimeout(() => this.loadDatatable(), 500);
   },
   methods: {

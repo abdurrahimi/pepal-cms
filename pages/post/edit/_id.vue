@@ -288,7 +288,7 @@ export default {
     async getData() {
       await this.$axios.get("/api/post/" + this.$route.params.id).then((res) => {
         this.form = res.data;
-        tinyMCE.activeEditor.setContent(res.data?.content);
+        tinyMCE.activeEditor.setContent(res.data.content);
       });
     },
     getCategory() {

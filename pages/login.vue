@@ -57,10 +57,18 @@
                           </div>
                         </div>
                         <button
+                          v-if="!submitting"
                           type="submit"
                           class="ud-main-btn text-uppercase"
                         >
                           Masuk
+                        </button>
+                        <button
+                          v-else
+                          type="button"
+                          class="ud-main-btn text-uppercase disabled"
+                        >
+                          Loading...
                         </button>
                         <p>
                           Belum punya akun Saldobit?
@@ -98,7 +106,6 @@ export default {
     },
     methods:{
         async handleSubmit(e){
-          console.log('okok')
             this.submitting = true
             this.$auth.loginWith('laravelJWT', {data:this.form})
             .then((res) =>{

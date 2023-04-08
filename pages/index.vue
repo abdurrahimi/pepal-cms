@@ -18,20 +18,17 @@
               <ul class="ud-hero-buttons">
                 <li>
                   <nuxt-link
-                    to="/layanan/topup"
-                    target="_blank"
+                    to="/layanan/topup"  
                     class="ud-main-btn ud-white-btn"
                     >Jasa Top Up PayPal</nuxt-link
                   >
                 </li>
                 <li>
-                  <a
-                    href="jasa-pembayaran-online.php"
-                    target="_blank"
-                    class="ud-main-btn ud-yellow-btn"
+                  <nuxt-link
+                    to="/layanan/jasa-pembayaran-online"  
+                    class="ud-main-btn ud-white-btn"
+                    >Jasa Pembayaran Online</nuxt-link
                   >
-                    Jasa Bayar
-                  </a>
                 </li>
               </ul>
             </div>
@@ -108,9 +105,10 @@
                 </div>
                 <div class="service-item-content">
                   <div class="layanan">
-                    <a href="jasa-pembayaran-online.php"
-                      >Jasa Pembayaran PayPal</a
-                    >
+                    <nuxt-link
+                    to="/layanan/jasa-pembayaran-online"  
+                    >Jasa Pembayaran Online</nuxt-link
+                  >
                   </div>
                   <p>
                     Kami juga menyediakan jasa pembayaran online menggunakan
@@ -290,7 +288,7 @@
                       <h5>Login</h5>
                       <p class="mb-0">
                         Silahkan login ke akun Saldobit anda melalui link
-                        <a href="login">Login</a>. Jika belum punya akun,
+                        <nuxt-link to="/login">Login</nuxt-link>. Jika belum punya akun,
                         silahkan daftar dulu.
                       </p>
                     </div>
@@ -415,13 +413,6 @@
                             }}</span
                             ><br />
                             <br />
-                            <a
-                              href="#"
-                              id="buy_btn"
-                              target="_blank"
-                              class="sec-btn"
-                              >Order Sekarang</a
-                            >
                             <!-- hide end -->
                           </div>
                           <button
@@ -572,13 +563,6 @@
                               }}</span
                             ><br />
                             <br />
-                            <a
-                              href="#"
-                              id="buy_btn"
-                              target="_blank"
-                              class="sec-btn"
-                              >Order Sekarang</a
-                            >
                             <!-- hide end -->
                           </div>
                           <button

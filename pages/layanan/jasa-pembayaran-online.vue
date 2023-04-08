@@ -14,7 +14,7 @@
               <!--<p>Kami adalah penyedia jasa pembayaran online yang bertujuan membantu anda untuk membeli barang secara online di seluruh website yang memerlukan pembayaran melalui PayPal.</p>-->
             </div>
             <!-- ini arahkan ke wa admin saja, no wa-nya ambil dari menu setting -->
-            <a href="https://wa.me/6281333903291?text=Hello Saldobit"  target="_blank" class="sec-btn">Order Sekarang</a>
+            <nuxt-link to="/order/new" class="sec-btn">Order Sekarang</nuxt-link>
           </div>
           <div class="col-lg-6">
             <div class="saldo-area-img">
@@ -206,7 +206,7 @@
                       Nominal yang harus dibayar : <span class="fw-bold" id="result_pay">Rp.785.000</span><br/>
                       <br/>
 					  <!-- ini arahkan ke wa admin saja, no wa-nya ambil dari menu setting -->
-					  <a href="https://wa.me/6281333903291?text=Hello Saldobit" id="buy_btn" target="_blank" class="sec-btn">Order Sekarang</a>
+					  <nuxt-link to="/order/new" class="sec-btn">Order Sekarang</nuxt-link>
                     </div>
                     <button type="submit" class="ud-main-btn ud-white-btn mt-2">Hitung</button>
                   </div>
@@ -227,7 +227,7 @@
                 <span class="yellow">Our Working Process</span>
                 <h2>4 Langkah mudah order jasa bayar online di Saldobit</h2>
               </div>
-              <a href="#" target="_blank" class="quote-btn">Order Sekarang</a>
+              <nuxt-link to="/order/new" class="quote-btn">Order Sekarang</nuxt-link>
             </div>
           </div>
           <div class="col-lg-7">
@@ -236,7 +236,7 @@
                 <div class="work-process-card">
                   <i class="ri-login-box-line"></i>
                   <h3>Login</h3>
-                  <p>Silahkan login ke akun Saldobit anda melalui link <a href="login">Login</a>. Jika belum punya akun, silahkan daftar dulu.</p>
+                  <p>Silahkan login ke akun Saldobit anda melalui link <nuxt-link to="/login">Login</nuxt-link>. Jika belum punya akun, silahkan daftar dulu.</p>
                   <div class="number">1</div>
                 </div>
               </div>
@@ -359,7 +359,7 @@
                 </button>
                 <div id="collapse-6" class="accordion-collapse collapse">
                   <div class="ud-faq-body">
-                    Ya kami melayani Top up saldo paypal juga. Untuk lebih jelas bisa dicek pada link berikut: <a href="https://saldobit.com/jual-saldo-paypal">jual saldo PayPal</a>
+                    Ya kami melayani Top up saldo paypal juga. Untuk lebih jelas bisa dicek pada link berikut: <nuxt-link to="/topup">jual saldo PayPal</nuxt-link>
                   </div>
                 </div>
               </div>

@@ -138,7 +138,7 @@
                     </span>
                   </label>
                   <textarea
-                    v-model="form.invoice"
+                    v-model="form.akun"
                     name="link_invoice"
                     placeholder="Link invoice"
                     id="link-invoice"
@@ -149,16 +149,39 @@
                   <label class="col-form-label">Kupon</label>
                   <div class="input-group">
                     <input
-                      v-model="form.kupon"
                       type="text"
                       class="form-control"
                       placeholder="Kupon"
+                      v-model="form.kupon"
                       aria-label="Kupon"
                       aria-describedby="basic-addon2"
                     />
-                    <span class="input-group-text btn-success" id="apply-coupon"
-                      >Apply</span
+                    <button
+                      v-if="!voucherResponse.applied"
+                      type="button"
+                      class="input-group-text btn-primary"
+                      id="apply-coupon"
+                      @click="applyVoucher"
                     >
+                      Apply
+                    </button>
+                    <button
+                      v-else
+                      type="button"
+                      class="input-group-text btn-success disabled"
+                      id="apply-coupon"
+                    >
+                      Applied
+                    </button>
+                  </div>
+                  <div v-if="voucherResponse.message != ''" class="text-danger">
+                    &nbsp;{{ voucherResponse.message }}
+                  </div>
+                  <div
+                    v-if="voucherResponse.successMessage != ''"
+                    class="text-success"
+                  >
+                    &nbsp;{{ voucherResponse.successMessage }}
                   </div>
                 </div>
                 <div class="form-group">
@@ -170,7 +193,13 @@
                     name="bank"
                   >
                     <option value="" disabled>Silahkan Pilih...</option>
-                    <option v-for="(item,key) in pembayaran" :value="item?.id" :key="key">{{ item?.bank }}</option>
+                    <option
+                      v-for="(item, key) in pembayaran"
+                      :value="item?.id"
+                      :key="key"
+                    >
+                      {{ item?.bank }}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group mb-3">
@@ -185,7 +214,7 @@
                     ></i>
                   </span>
                   <textarea
-                    v-model="form.akun"
+                    v-model="form.keterangan"
                     name="keterangan"
                     rows="5"
                     placeholder="Keterangan"
@@ -241,7 +270,11 @@
                     </tr>
                     <tr>
                       <td>Pembayaran</td>
-                      <td class="text-end">{{ pembayaran.filter(v => v.id == form.metode)[0]?.bank }}</td>
+                      <td class="text-end">
+                        {{
+                          pembayaran.filter((v) => v.id == form.metode)[0]?.bank
+                        }}
+                      </td>
                     </tr>
                     <tr>
                       <td>Rate</td>
@@ -263,8 +296,7 @@
                             style: "currency",
                             currency: "IDR",
                           }).format(
-                            (
-                              rate * form.nominal - discount) * (4 / 100) > 30000
+                            (rate * form.nominal - discount) * (4 / 100) > 30000
                               ? (rate * form.nominal - discount) * (4 / 100)
                               : 30000
                           )
@@ -273,8 +305,15 @@
                     </tr>
                     <!-- Jika ada discount, echo discount -->
                     <tr>
-                      <td>Discount (jika ada)</td>
-                      <td class="text-end">Rp 0</td>
+                      <td>Discount</td>
+                      <td class="text-end">
+                        {{
+                          new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(discount)
+                        }}
+                      </td>
                     </tr>
                     <tr>
                       <td>Total</td>
@@ -325,9 +364,15 @@ export default {
         kupon: "",
         metode: "",
         keterangan: "",
+        applied: false,
         order: "bayar",
       },
-      pembayaran:[],
+      voucherResponse: {
+        message: "",
+        successMessage: "",
+        applied: false,
+      },
+      pembayaran: [],
       discount: 0,
       validateVoucher: false,
       term: false,
@@ -335,12 +380,34 @@ export default {
   },
   async mounted() {
     await this.getRate();
-    await this.getPembayaran()
+    await this.getPembayaran();
   },
   methods: {
-    async getPembayaran(){
+    async getPembayaran() {
       const { data } = await this.$axios.get("/api/bank");
-      this.pembayaran = data
+      this.pembayaran = data;
+    },
+    applyVoucher() {
+      this.$axios
+        .post("/api/voucher/apply", this.form)
+        .then((res) => {
+          if (res.data.valid) {
+            this.voucherResponse = {
+              message: "",
+              successMessage: "",
+              applied: false,
+            };
+            this.discount = parseInt(res.data.voucher.jumlah);
+            (this.voucherResponse.applied = true),
+              (this.voucherResponse.successMessage = res.data.message);
+            this.voucherResponse.voucher = res.data.voucher;
+          }
+        })
+        .catch((err) => {
+          if (err.response.status == 422) {
+            this.voucherResponse = err.response.data;
+          }
+        });
     },
     async getRate() {
       const { data } = await this.$axios.get("/api/get-rate");

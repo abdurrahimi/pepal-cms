@@ -34,7 +34,7 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="$auth.user.role == 'admin'">
         <a
           class="nav-link collapsed"
           data-bs-target="#voucher-nav"
@@ -55,6 +55,37 @@
             <nuxt-link to="/voucher/list">
               <span>Voucher List</span>
             </nuxt-link>
+          </li>
+          <li v-if="$auth.user.role == 'admin'">
+            <nuxt-link to="/voucher/new">
+              <span>New Voucher</span>
+            </nuxt-link>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-heading" v-if="$auth.user.role == 'admin'">Payment</li>
+      <li class="nav-item" v-if="$auth.user.role == 'admin'">
+        <a
+          class="nav-link collapsed"
+          data-bs-target="#payment-nav"
+          data-bs-toggle="collapse"
+          href="#"
+          aria-expanded="false"
+        >
+          <i class="ri-bank-line"></i><span>Bank</span
+          ><i class="ri-arrow-right-s-line arrow-down ms-auto"></i>
+        </a>
+        <ul
+          id="payment-nav"
+          class="nav-content collapse"
+          data-bs-parent="#sidebar-nav"
+          style=""
+        >
+          <li>
+            <nuxt-link to="/bank/list"> <span>Bank List</span> </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/bank/new"> <span>New Bank</span> </nuxt-link>
           </li>
         </ul>
       </li>
@@ -92,7 +123,7 @@
           href="#"
           aria-expanded="false"
         >
-          <i class="ri-book-open-line"></i><span>Category</span
+          <i class="ri-price-tag-3-line"></i><span>Category</span
           ><i class="ri-arrow-right-s-line arrow-down ms-auto"></i>
         </a>
         <ul

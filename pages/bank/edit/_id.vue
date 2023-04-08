@@ -98,15 +98,18 @@ export default {
     let { data } = await $axios.get(`/api/v1/bank/${route.params.id}`);
     return { data };
   },
-  mounted(){
-    this.form = this.data
+  mounted() {
+    if (this.$auth.user.role != "admin") {
+      this.$router.replace("/404");
+    }
+    this.form = this.data;
   },
   methods: {
     getData() {},
     submitHandler() {
       this.submit = true;
       this.$axios
-        .put("/api/bank/"+this.$route.params.id, this.form)
+        .put("/api/bank/" + this.$route.params.id, this.form)
         .then((res) => {
           this.$swal.fire("Success", "Data berhasil disimpan", "success");
           this.$router.push("/bank/list");

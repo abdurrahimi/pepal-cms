@@ -94,6 +94,11 @@ export default {
       },
     };
   },
+  mounted() {
+    if (this.$auth.user.role != "admin") {
+      this.$router.replace("/404");
+    }
+  },
   methods: {
     submitHandler() {
       this.submit = true;

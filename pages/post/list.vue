@@ -55,6 +55,9 @@
 <script>
 export default {
   async mounted() {
+    if (this.$auth.user.role != "admin") {
+      this.$router.replace("/404");
+    }
     window.edit = this.edit;
     window.deleteData = this.deleteData
     setTimeout(() => this.loadDatatable(), 500);

@@ -11,7 +11,6 @@ export const actions = {
           this.$auth.setUser(data)
         } catch (err) {
           auth = null
-          console.log(err)
         }
       }
     },

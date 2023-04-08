@@ -10,7 +10,7 @@
               <p>Saldobit melayani jasa top up PayPal dan menjual saldo PayPal untuk Anda. Saldo PayPal yang kami jual 100% halal, legal dan aman. Dapatkan saldo PayPal dengan rate terbaik disini!</p>
 			</div>
 			<!-- ini arahkan ke wa admin saja, no wa-nya ambil dari menu setting -->
-            <a href="https://wa.me/6281333903291?text=Hello Saldobit"  target="_blank" class="sec-btn">Order Sekarang</a>
+            <nuxt-link to="/order/new" class="sec-btn">Order Sekarang</nuxt-link>
 		  </div>
 		  <div class="col-lg-6">
 			<div class="saldo-area-img">
@@ -224,7 +224,7 @@
 					  Nominal yang harus dibayar : <span class="fw-bold" id="result_pay">Rp.755.000</span><br/>
 					  <br/>
 					  <!-- ini arahkan ke wa admin saja, no wa-nya ambil dari menu setting -->
-					<a href="https://wa.me/6281333903291?text=Hello Saldobit"  target="_blank" class="sec-btn">Order Sekarang</a>
+					  <nuxt-link to="/order/new" class="sec-btn">Order Sekarang</nuxt-link>
 					</div>
 					<button type="submit" class="ud-main-btn ud-white-btn mt-2">Hitung</button>
                   </div>
@@ -246,7 +246,8 @@
 				<span class="yellow">Our Working Process</span>
 				<h2>4 Langkah mudah beli saldo PayPal di Saldobit</h2>
 			  </div>
-			  <a href="https://wa.me/6281333903291?text=Hello Saldobit" target="_blank" class="quote-btn">Order Sekarang</a>
+			  <nuxt-link to="/order/new" class="quote-btn">Order Sekarang</nuxt-link>
+			  <!-- <a href="https://wa.me/6281333903291?text=Hello Saldobit" target="_blank" class="quote-btn">Order Sekarang</a> -->
 			</div>
 		  </div>
 		  <div class="col-lg-7">
@@ -255,7 +256,7 @@
 			    <div class="work-process-card">
 			      <i class="ri-login-box-line"></i>
 			      <h3>Login</h3>
-			      <p>Silahkan login ke akun Saldobit anda melalui link <a href="login">Login</a>. Jika belum punya akun, silahkan daftar dulu.</p>
+			      <p>Silahkan login ke akun Saldobit anda melalui link <nuxt-link to="/login">Login</nuxt-link>. Jika belum punya akun, silahkan daftar dulu.</p>
 			      <div class="number">1</div>
 			    </div>
 		      </div>
@@ -436,7 +437,7 @@
                 <div id="collapse-8" class="accordion-collapse collapse">
                   <div class="ud-faq-body">
                     Kami memberikan layanan pembayaran menggunakan PayPal dengan akun kami. 
-					Lebih jelas terkait jasa pembayaran Paypal, dapat anda cek tautan berkut: <a href="jasa-pembayaran-online.php">jasa pembayaran online</a>
+					Lebih jelas terkait jasa pembayaran Paypal, dapat anda cek tautan berkut: <nuxt-link to="/jasa-pembayaran-online">jasa pembayaran online</nuxt-link>
                   </div>
                 </div>
               </div>
@@ -487,7 +488,7 @@
           <p style="text-align: justify;">Cara top up saldo PayPal kedua yaitu menggunakan jasa top up saldo PayPal. Cara kerja dari jasa top up saldo PayPal ini seperti layaknya <em>moneychanger</em>, dimana anda selaku pembeli mengirim uang rupiah ke rekening penjual, kemudian penjual mengirim saldo paypal ke akun paypal anda.</p>
 		   <p style="text-align: justify;">Untuk melakukan isi saldo PayPal menggunakan jasa top up saldo PayPal, ada beberapa hal yang perlu diperhatikan, yaitu:
 			<ol>
-            <li>1. Pertama, Anda harus mencari jasa top up saldo PayPal terpercaya dengan reputasi yang bagus agar tidak tertipu. Contoh jasa layanan top up saldo yang dapat anda gunakan adalah jasa layanan top up saldo paypal dari <a href="https://saldosbit.com">saldobit.com</a>.</li>
+            <li>1. Pertama, Anda harus mencari jasa top up saldo PayPal terpercaya dengan reputasi yang bagus agar tidak tertipu. Contoh jasa layanan top up saldo yang dapat anda gunakan adalah jasa layanan top up saldo paypal dari <a href="https://saldobit.com">saldobit.com</a>.</li>
 			<li>2. Selanjutnya, Anda harus menyediakan  akun PayPal yang sudah terverifikasi dan tidak dalam keadaan terkena limit. Ini untuk memastikan ketika anda membeli saldo PayPal, saldo tersebut beli bisa langsung masuk tanpa kena hold dan bisa segera digunakan.</li>
 			<li>3. Cek metode pembayaran yang diterapkan pada jasa tersebut agar Anda tidak terkena biaya tambahan, yaitu transfer antarbank.</li>
 			<li>4. Segera lakukan cek saldo Paypal anda setelah mendapatkan informasi pengiriman dari penjual.</li>
@@ -525,7 +526,7 @@
 </template>
 <script>
 export default {
-    layout:"main",
-	auth:false,
-}
+  layout: "main",
+  auth: false,
+};
 </script>

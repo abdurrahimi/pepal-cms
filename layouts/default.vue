@@ -210,15 +210,23 @@ export default {
   auth: true,
   head() {
     return {
-      title: "cms",
+      title: "Jual Saldo Paypal dan Jasa Pembayaran Online - Saldobit",
       htmlAttrs: {
         lang: "en",
       },
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { hid: "description", name: "description", content: "" },
         { name: "format-detection", content: "telephone=no" },
+        {
+          name: "title",
+          content: "Jual Saldo Paypal dan Jasa Pembayaran Online - Saldobit",
+        },
+        {
+          name: "description",
+          content:
+            "Situs jual saldo PayPal dan jasa pembayaran online. Nikmati beli saldo PayPal, top up PayPal, isi saldo PayPal dengan murah, cepat dan aman di Saldobit.",
+        },
       ],
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },

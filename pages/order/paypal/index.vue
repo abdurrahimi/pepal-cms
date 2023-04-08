@@ -50,6 +50,7 @@
                         ></i
                       ></span>
                       <input
+                       v-if="!voucherResponse.applied"
                         type="number"
                         name="nominal"
                         v-model="form.nominal"
@@ -58,6 +59,16 @@
                         min="30"
                         class="form-control"
                         required
+                      />
+                      <input
+                        v-else
+                        type="number"
+                        name="nominal"
+                        :value="form.nominal"
+                        placeholder="Nominal"
+                        id="nominal"
+                        class="form-control"
+                        disabled
                       />
                     </div>
                     <div class="col-4">
@@ -105,10 +116,26 @@
                       aria-label="Kupon"
                       aria-describedby="basic-addon2"
                     />
-                    <span class="input-group-text btn-success" id="apply-coupon"
-                      >Apply</span
+                    <button
+                      v-if="!voucherResponse.applied"
+                      type="button"
+                      class="input-group-text btn-primary"
+                      id="apply-coupon"
+                      @click="applyVoucher"
                     >
+                      Apply
+                    </button>
+                    <button
+                      v-else
+                      type="button"
+                      class="input-group-text btn-success disabled"
+                      id="apply-coupon"
+                    >
+                      Applied
+                    </button>
                   </div>
+                  <div v-if="voucherResponse.message != ''" class="text-danger">&nbsp;{{ voucherResponse.message }}</div>
+                  <div v-if="voucherResponse.successMessage != ''" class="text-success">&nbsp;{{ voucherResponse.successMessage }}</div>
                 </div>
                 <div class="form-group">
                   <label class="col-form-label">Metode Pembayaran</label>
@@ -120,8 +147,14 @@
                     required
                   >
                     <option value="" disabled>Silahkan Pilih...</option>
-                    <option v-for="(item,key) in pembayaran" :value="item?.id" :key="key">{{ item?.bank }}</option>
-<!--                     <option value="mandiri">Mandiri</option>
+                    <option
+                      v-for="(item, key) in pembayaran"
+                      :value="item?.id"
+                      :key="key"
+                    >
+                      {{ item?.bank }}
+                    </option>
+                    <!--                     <option value="mandiri">Mandiri</option>
                     <option value="bni">BNI</option>
                     <option value="bri">BRI</option>
                     <option value="jago">Jago</option>
@@ -282,21 +315,57 @@ export default {
         metode: "",
         pesan: "",
         order: "paypal",
+        applied:false,
         setuju: false,
       },
-      pembayaran:{},
+      voucherResponse:{
+        message:"",
+        successMessage:"",
+        applied:false,
+      },
+      pembayaran: {},
       error: {},
     };
   },
+  watch:{
+    "form.nominal"(val){
+      this.voucherResponse ={
+        message:"",
+        successMessage:"",
+        applied:false,
+      }
+    }
+  },
   async mounted() {
-    await this.getRate()
-    await this.getPembayaran()
+    await this.getRate();
+    await this.getPembayaran();
     $('[data-toggle="tooltip"]').tooltip();
   },
   methods: {
-    async getPembayaran(){
+    async getPembayaran() {
       const { data } = await this.$axios.get("/api/bank");
-      this.pembayaran = data
+      this.pembayaran = data;
+    },
+    applyVoucher() {
+      this.$axios
+        .post("/api/voucher/apply", this.form)
+        .then((res) => {
+          if(res.data.valid){
+            this.voucherResponse ={
+              message:"",
+              successMessage:"",
+              applied:false,
+            }
+            this.discount = parseInt(res.data.voucher.jumlah)
+            this.voucherResponse.applied = true,
+            this.voucherResponse.successMessage = res.data.message
+            this.voucherResponse.voucher = res.data.voucher
+          }
+        }).catch(err => {
+          if(err.response.status == 422){
+            this.voucherResponse = err.response.data
+          }
+        })
     },
     async getRate() {
       const { data } = await this.$axios.get("/api/get-rate");
@@ -304,6 +373,9 @@ export default {
       this.rate = data.rate;
     },
     submitEvent() {
+      if(this.voucherResponse.applied){
+        this.form.applied = true
+      }
       this.error = {};
       this.submit = true;
       this.$axios
@@ -311,7 +383,7 @@ export default {
         .then((res) => {
           this.$swal.fire("Success", "Pesananmu telah disimpan", "success");
           this.submit = false;
-          this.$router.push("/order/list");
+          this.$router.push("/order/pembayaran/"+res.id);
         })
         .catch((err) => {
           if (err.response.status == 400) {

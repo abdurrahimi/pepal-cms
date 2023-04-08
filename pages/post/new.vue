@@ -266,6 +266,9 @@ export default {
     };
   },
   async mounted() {
+    if (this.$auth.user.role != "admin") {
+      this.$router.replace("/404");
+    }
     await this.getCategory();
     setTimeout(() => {
       if(tinymce.activeEditor != null )

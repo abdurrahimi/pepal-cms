@@ -34,6 +34,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    '@nuxtjs/moment',
     'vue-sweetalert2/nuxt',
     'cookie-universal-nuxt',
   ],
@@ -48,6 +49,11 @@ export default {
     common: {
       'Accept': 'application/json'
     },
+  },
+
+  moment: {
+    defaultLocale: 'id',
+    locales: ['id']
   },
 
   proxy: {
