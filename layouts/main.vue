@@ -1,11 +1,8 @@
 <template>
-  <div v-if="mounted">
+  <div>
     <LayoutsFrontHeader />
     <Nuxt />
     <LayoutsFrontFooter />
-  </div>
-  <div v-else>
-    <Loader/>
   </div>
 </template>
 <script>
