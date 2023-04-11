@@ -539,7 +539,7 @@
                           class="dtr-control sorting_1"
                           tabindex="0"
                         >
-                          <a href="#">#{{ item.id }}</a>
+                          <nuxt-link :to="'/order/detail/'+item.id">#{{ item.id }}</nuxt-link>
                         </th>
                         <td>{{ item.user?.name }}</td>
                         <td>
