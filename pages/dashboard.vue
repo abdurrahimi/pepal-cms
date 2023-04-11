@@ -265,9 +265,9 @@
                 <div class="card-title fs-6">Top Up Saldo</div>
                 <div class="fs-5 fw-bold mb-2 text-primary">
                   {{
-                    new Intl.NumberFormat("id-ID", {
+                    new Intl.NumberFormat("en-US", {
                       style: "currency",
-                      currency: "IDR",
+                      currency: "USD",
                     }).format(topup)
                   }}
                 </div>
