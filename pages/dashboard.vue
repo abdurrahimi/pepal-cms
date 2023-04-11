@@ -283,9 +283,9 @@
                         <div class="d-flex justify-content-between mb-1">
                           <span>{{ item.status }}</span>
                           <span class="fw-bold">{{
-                            new Intl.NumberFormat("id-ID", {
+                            new Intl.NumberFormat("en-US", {
                               style: "currency",
-                              currency: "IDR",
+                              currency: "USD",
                             }).format(item.total)
                           }}</span>
                         </div>
