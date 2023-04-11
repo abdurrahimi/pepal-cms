@@ -428,22 +428,6 @@
             >
               <div class="row">
                 <div class="col-sm-12 col-md-6">
-                  <div class="dataTables_length" id="datatable_length">
-                    <label
-                      >Show
-                      <select
-                        name="datatable_length"
-                        aria-controls="datatable"
-                        class="form-select form-select-sm"
-                      >
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                      </select>
-                      entries</label
-                    >
-                  </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                   <div id="datatable_filter" class="dataTables_filter">
@@ -567,16 +551,16 @@
                             new Intl.NumberFormat("en-US", {
                               style: "currency",
                               currency: "USD",
-                            }).format(nominal)
+                            }).format(item.nominal)
                           }}
                         </td>
                         <td>{{
                           new Intl.NumberFormat("id-ID", {
                             style: "currency",
                             currency: "IDR",
-                          }).format(total)
+                          }).format(item.total)
                         }}</td>
-                        <td><span class="badge bg-success">Completed</span></td>
+                        <td><Status :status="item.status"/></td>
                       </tr>
                     </tbody>
                   </table>
@@ -590,7 +574,7 @@
                     role="status"
                     aria-live="polite"
                   >
-                    Showing 1 to 5 of 5 entries
+                    Showing 1 to {{datas.latest.length}} of {{datas.latest.length}} entries
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
