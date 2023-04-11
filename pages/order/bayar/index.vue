@@ -283,7 +283,7 @@
                           new Intl.NumberFormat("id-ID", {
                             style: "currency",
                             currency: "IDR",
-                          }).format(rate)
+                          }).format( form.nominal > 50 ? rate : rate +500)
                         }}
                       </td>
                     </tr>
