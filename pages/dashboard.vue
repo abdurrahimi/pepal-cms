@@ -12,9 +12,9 @@
             <div class="card-amount">
               <span class="amount fw-bolder">
                 {{
-                  new Intl.NumberFormat("id-ID", {
+                  new Intl.NumberFormat("en-US", {
                     style: "currency",
-                    currency: "IDR",
+                    currency: "USD",
                   }).format(topup)
                 }}
               </span>
@@ -25,9 +25,9 @@
                   <div class="title">Bulan Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.month?.filter(
                           (v) => v.tipe == "paypal"
@@ -40,9 +40,9 @@
                   <div class="title">Minggu Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.week?.filter(
                           (v) => v.tipe == "paypal"
@@ -68,9 +68,9 @@
             <div class="card-amount">
               <span class="amount fw-bolder">
                 {{
-                  new Intl.NumberFormat("id-ID", {
+                  new Intl.NumberFormat("en-US", {
                     style: "currency",
-                    currency: "IDR",
+                    currency: "USD",
                   }).format(
                     datas.transaksi?.all.filter((v) => v.tipe == "bayar")[0]
                       ?.total ?? 0
@@ -84,9 +84,9 @@
                   <div class="title">Bulan Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.month?.filter(
                           (v) => v.tipe == "bayar"
@@ -99,9 +99,9 @@
                   <div class="title">Minggu Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.week?.filter(
                           (v) => v.tipe == "bayar"

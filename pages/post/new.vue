@@ -176,6 +176,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    v-model="form.is_featured"
                     id="isFeaturedChecked"
                     checked
                   />
@@ -261,6 +262,7 @@ export default {
         meta_title: "",
         meta_desc: "",
         status: true,
+        is_featured:false,
         date_published: "",
       },
     };
