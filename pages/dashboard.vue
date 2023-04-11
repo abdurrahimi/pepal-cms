@@ -274,35 +274,42 @@
                 <div class="progress-card">
                   <template v-for="(item, key) in datas.transaksi?.all">
                     <div :key="key" v-if="item.tipe == 'paypal'">
-                      <div class="d-flex justify-content-between mb-1">
-                        <span>{{ item.status }}</span>
-                        <span class="fw-bold">{{
-                          new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                          }).format(item.total)
-                        }}</span>
-                      </div>
-                      <div class="progress mb-2" style="height: 8px">
-                        <div
-                          class="progress-bar"
-                          :class="
-                            background[
-                              Math.floor(Math.random() * background.length)
-                            ]
-                          "
-                          role="progressbar"
-                          :style="
-                            'width:' + Math.floor(Math.random() * 101) + '%'
-                          "
-                          :aria-valuenow="Math.random()"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          aria-label="80%"
-                          data-bs-original-title="80%"
-                        ></div>
+                      <div
+                        v-if="
+                          item.status == 'Waiting' ||
+                          item.status == 'Processing'
+                        "
+                      >
+                        <div class="d-flex justify-content-between mb-1">
+                          <span>{{ item.status }}</span>
+                          <span class="fw-bold">{{
+                            new Intl.NumberFormat("id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                            }).format(item.total)
+                          }}</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 8px">
+                          <div
+                            class="progress-bar"
+                            :class="
+                              background[
+                                Math.floor(Math.random() * background.length)
+                              ]
+                            "
+                            role="progressbar"
+                            :style="
+                              'width:' + Math.floor(Math.random() * 101) + '%'
+                            "
+                            :aria-valuenow="Math.random()"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            aria-label="80%"
+                            data-bs-original-title="80%"
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   </template>
