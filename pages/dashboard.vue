@@ -280,7 +280,9 @@
                           <div
                             class="progress-bar"
                             :class="
-                             item.status == 'Waiting' ? 'bg-primary' : 'bg-success'
+                              item.status == 'Waiting'
+                                ? 'bg-primary'
+                                : 'bg-success'
                             "
                             role="progressbar"
                             :style="
@@ -543,75 +545,38 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="odd">
+                      <tr
+                        class="odd"
+                        v-for="item in datas.latest"
+                        :key="item.id"
+                      >
                         <th
                           scope="row"
                           class="dtr-control sorting_1"
                           tabindex="0"
                         >
-                          <a href="#">#92457</a>
+                          <a href="#">#{{ item.id }}</a>
                         </th>
-                        <td>Aldy Fajar Putra Martin</td>
-                        <td>Top Up</td>
-                        <td>$125.00</td>
-                        <td>Rp1.800.750</td>
+                        <td>{{ item.user?.name }}</td>
+                        <td>
+                          <span v-if="item.tipe == 'paypal'"> Top Up</span>
+                          <span v-else> Pembayaran </span>
+                        </td>
+                        <td>
+                          {{
+                            new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            }).format(nominal)
+                          }}
+                        </td>
+                        <td>{{
+                          new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(total)
+                        }}</td>
                         <td><span class="badge bg-success">Completed</span></td>
-                      </tr>
-                      <tr class="even">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92458</a>
-                        </th>
-                        <td>Ali Mufid</td>
-                        <td>Jasa Bayar</td>
-                        <td>$57.00</td>
-                        <td>Rp780.750</td>
-                        <td><span class="badge bg-warning">Waiting</span></td>
-                      </tr>
-                      <tr class="odd">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92459</a>
-                        </th>
-                        <td>Wendy Tanutama</td>
-                        <td>Top Up</td>
-                        <td>$210.00</td>
-                        <td>Rp3.200.000</td>
-                        <td><span class="badge bg-secondary">Sent</span></td>
-                      </tr>
-                      <tr class="even">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92460</a>
-                        </th>
-                        <td>Rudi Laksamana</td>
-                        <td>Top Up</td>
-                        <td>$1200.00</td>
-                        <td>Rp15.800.750</td>
-                        <td><span class="badge bg-danger">Refunded</span></td>
-                      </tr>
-                      <tr class="odd">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92461</a>
-                        </th>
-                        <td>Kota Komputer Mandiri</td>
-                        <td>Jasa Bayar</td>
-                        <td>$165.00</td>
-                        <td>Rp1.800.750</td>
-                        <td><span class="badge bg-info">Processing</span></td>
                       </tr>
                     </tbody>
                   </table>
@@ -688,7 +653,7 @@ export default {
   name: "IndexPage",
   data() {
     return {
-      datas: { total: [], transaksi: { all: [] } },
+      datas: { total: [], transaksi: { all: [] }, latest: [] },
       background: [
         "bg-primary",
         "bg-secondary",
