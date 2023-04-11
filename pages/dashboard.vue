@@ -293,9 +293,7 @@
                           <div
                             class="progress-bar"
                             :class="
-                              background[
-                                Math.floor(Math.random() * background.length)
-                              ]
+                             item.status == 'Waiting' ? 'bg-primary' : 'bg-success'
                             "
                             role="progressbar"
                             :style="
