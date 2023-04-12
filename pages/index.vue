@@ -1052,7 +1052,6 @@ export default {
   methods: {
     async getRate() {
       const { data } = await this.$axios.get("/api/get-rate");
-      console.log(data);
       this.rate = data.rate;
       this.result = this.paypalValue * this.rate;
       this.resultBayar = this.jasabayarValue * this.rate;

@@ -44,17 +44,14 @@
 export default {
   layout: "main",
   auth: false,
-  async asyncData({ $axios, $config }) {
-    //$axios.setBaseURL($config.baseURL);
-    const post = await $axios.$get(`/api/blog/post`);
+  async asyncData({ store }) {
+    const post = await store.dispatch('post')
     return { post };
   },
   mounted() {
-    console.log("okok2");
   },
   methods:{
     loadNewData(page){
-
       this.$axios.get('/api/blog/post?page='+page).then(res => {
         this.post = res.data
       })
@@ -66,7 +63,7 @@ export default {
 .ud-blog-desc {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
 </style>

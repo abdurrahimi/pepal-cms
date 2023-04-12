@@ -152,7 +152,6 @@ export default {
   },
   methods: {
     register() {
-      console.log("masuk");
       if (this.form.password_confirmation != this.form.password) {
         this.error.message = "password tidak sama!";
         return;

@@ -141,8 +141,6 @@
         </div>
       </div>
     </section>
-    <!-- ====== Blog Details End ====== -->
-    <!-- ====== Blog Start ====== -->
     <section class="ud-blog-grids ud-related-articles">
       <div class="container">
         <div class="row col-lg-12">
@@ -191,11 +189,12 @@
 export default {
   layout: "main",
   auth: false,
-  async asyncData({ $axios, $config, route }) {
+  async asyncData({ store, route }) {
     //$axios.setBaseURL($config.baseURL);
-    let { data } = await $axios.post(`/api/blog/detail/`, {
+    let param = {
       slug: route.params.slug,
-    });
+    }
+    let data = await store.dispatch('details',param)
     return { data };
   },
 };
