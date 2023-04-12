@@ -45,7 +45,7 @@ export default {
   layout: "main",
   auth: false,
   async asyncData({ $axios, $config }) {
-    $axios.setBaseURL($config.baseURL);
+    //$axios.setBaseURL($config.baseURL);
     const post = await $axios.$get(`/api/v1/blog/post`);
     return { post };
   },

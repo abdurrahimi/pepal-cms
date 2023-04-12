@@ -192,7 +192,7 @@ export default {
   layout: "main",
   auth: false,
   async asyncData({ $axios, $config, route }) {
-    $axios.setBaseURL($config.baseURL);
+    //$axios.setBaseURL($config.baseURL);
     let { data } = await $axios.post(`/api/v1/blog/detail/`, {
       slug: route.params.slug,
     });
