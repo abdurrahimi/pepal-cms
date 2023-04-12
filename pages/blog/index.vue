@@ -46,7 +46,7 @@ export default {
   auth: false,
   async asyncData({ $axios, $config }) {
     //$axios.setBaseURL($config.baseURL);
-    const post = await $axios.$get(`/api/v1/blog/post`);
+    const post = await $axios.$get(`/api/blog/post`);
     return { post };
   },
   mounted() {
