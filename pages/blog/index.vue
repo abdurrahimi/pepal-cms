@@ -32,7 +32,7 @@
         <div class="">
           <ul class="pagination">
             <li v-for="item,key in post.links" :key="key" :class="!item.active? 'icon' : ''">
-              <a href="#" @click="item.active ? loadNewData(item.url) : ''"><span v-html="item.label"></span></a>
+              <a href="#" @click="item.active ? loadNewData(item.label) : ''"><span v-html="item.label"></span></a>
             </li>
           </ul>
         </div>
@@ -53,9 +53,9 @@ export default {
     console.log("okok2");
   },
   methods:{
-    loadNewData(url){
+    loadNewData(page){
       this.$axios.setBaseURL('/')
-      this.$axios.get(url).then(res => {
+      this.$axios.get('/api/blog/post?page='+page).then(res => {
         this.post = res.data
       })
     }
