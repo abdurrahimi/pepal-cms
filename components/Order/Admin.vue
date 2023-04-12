@@ -436,6 +436,7 @@ export default {
     addHistory() {
       this.history.pesan = tinymce.get("comment").getContent();
       this.submit.history = true;
+      this.$axios.setBaseURL('/')
       this.$axios
         .post(`/api/history-order/${this.$route.params.id}`, this.history)
         .then((res) => {
@@ -455,6 +456,7 @@ export default {
     },
     addCatatan() {
       this.submit.catatan = true;
+      this.$axios.setBaseURL('/')
       this.$axios
         .post(`/api/catatan-order/${this.$route.params.id}`, this.catatan)
         .then((res) => {

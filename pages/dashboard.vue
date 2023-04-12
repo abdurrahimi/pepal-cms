@@ -683,6 +683,7 @@ export default {
   },
   methods: {
     getData() {
+      this.$axios.setBaseURL('/')
       this.$axios.get("/api/dashboard").then((res) => {
         this.datas = res.data;
       });

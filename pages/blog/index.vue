@@ -14,33 +14,25 @@
               </nuxt-link>
             </div>
             <div class="ud-blog-content">
-              <span class="ud-blog-date">Dec 22, 2023</span>
+              <span class="ud-blog-date">{{ new Date(item.created_at).toLocaleDateString() }}</span>
               <h3 class="ud-blog-title">
                 <nuxt-link :to="'/blog/detail/' + item.slug">
                   {{ item.title }}
                 </nuxt-link>
               </h3>
-              <p class="ud-blog-desc" v-html="item.content"></p>
+              <p
+                class="ud-blog-desc"
+                v-html="
+                  item.content.replaceAll(/<\/?[^>]+(>|$)/gi, '').slice(0, 200)
+                "
+              ></p>
             </div>
           </div>
         </div>
         <div class="">
           <ul class="pagination">
-            <li class="icon">
-              <a href="#"><span class="ri-arrow-left-s-line"></span>Prev</a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">6</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">8</a></li>
-            <li><a href="#">9</a></li>
-            <li><a href="#">10</a></li>
-            <li class="icon">
-              <a href="#">Next<span class="ri-arrow-right-s-line"></span></a>
+            <li v-for="item,key in post.links" :key="key" :class="!item.active? 'icon' : ''">
+              <a href="#" @click="item.active ? loadNewData(item.url) : ''"><span v-html="item.label"></span></a>
             </li>
           </ul>
         </div>
@@ -60,6 +52,14 @@ export default {
   mounted() {
     console.log("okok2");
   },
+  methods:{
+    loadNewData(url){
+      this.$axios.setBaseURL('/')
+      this.$axios.get(url).then(res => {
+        this.post = res.data
+      })
+    }
+  }
 };
 </script>
 <style scoped>

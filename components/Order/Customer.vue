@@ -216,7 +216,7 @@
                           (data.rate.rate * data.nominal - data.discount) * (4 / 100) > 30000
                               ? ((data?.rate?.rate * data.nominal) - data?.diskon)+(data.rate.rate * data.nominal - data.jumlah) * (4 / 100)
                               : ((data?.rate?.rate * data.nominal) - data?.diskon) + 30000
-                          
+
                         )
                       }}
                     </td>
@@ -338,7 +338,7 @@
                     </div>
                   </div>
                   <hr />
-  
+
                   <div class="form-group d-grid gap-2">
                     <div class="row">
                       <label
@@ -452,6 +452,7 @@ export default {
       reader.readAsDataURL(file);
     },
     submitHandler() {
+      this.$axios.setBaseURL('/')
       this.$axios
         .post("/api/upload-bukti/" + this.$route.params.id, this.form)
         .then((res) => {

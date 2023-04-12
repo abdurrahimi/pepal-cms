@@ -175,6 +175,7 @@ export default {
   methods: {
     submitHandler() {
       this.submit = true;
+      this.$axios.setBaseURL('/')
       this.$axios
         .post("/api/voucher", this.form)
         .then((res) => {

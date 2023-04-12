@@ -124,7 +124,7 @@
                     v-model="form.max_penggunaan"
                   />
                 </div>
-  
+
                 <div class="text-center mt-3 mb-2">
                   <button v-if="!submit" type="submit" class="btn btn-primary">
                     Save
@@ -146,7 +146,7 @@
     <script>
   import DatePicker from "vue2-datepicker";
   import "vue2-datepicker/index.css";
-  
+
   export default {
     components: { DatePicker },
     data() {
@@ -181,6 +181,7 @@
     methods: {
       submitHandler() {
         this.submit = true;
+        this.$axios.setBaseURL('/')
         this.$axios
           .put("/api/voucher/"+this.$route.params.id, this.form)
           .then((res) => {

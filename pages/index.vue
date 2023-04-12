@@ -18,14 +18,14 @@
               <ul class="ud-hero-buttons">
                 <li>
                   <nuxt-link
-                    to="/layanan/topup"  
+                    to="/layanan/topup"
                     class="ud-main-btn ud-white-btn"
                     >Jasa Top Up PayPal</nuxt-link
                   >
                 </li>
                 <li>
                   <nuxt-link
-                    to="/layanan/jasa-pembayaran-online"  
+                    to="/layanan/jasa-pembayaran-online"
                     class="ud-main-btn ud-white-btn"
                     >Jasa Pembayaran Online</nuxt-link
                   >
@@ -106,7 +106,7 @@
                 <div class="service-item-content">
                   <div class="layanan">
                     <nuxt-link
-                    to="/layanan/jasa-pembayaran-online"  
+                    to="/layanan/jasa-pembayaran-online"
                     >Jasa Pembayaran Online</nuxt-link
                   >
                   </div>

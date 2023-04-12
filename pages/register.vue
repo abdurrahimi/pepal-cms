@@ -158,6 +158,7 @@ export default {
         return;
       }
       this.error.message = "";
+      this.$axios.setBaseURL('/')
       this.$axios.post("/api/register", this.form).then((res) => {
         this.message = "Pendaftaran berhasil, mengaharkan ke halaman login"
         setTimeout(()=> {

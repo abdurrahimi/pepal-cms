@@ -6,7 +6,7 @@
           <div class="col-lg-8">
             <div class="ud-blog-details-content">
               <h2 class="ud-blog-details-title">
-                {{ data.title }}
+                {{ data.body.title }}
               </h2>
               <div class="ud-blog-overlay-content">
                 <div class="ud-blog-author">
@@ -16,18 +16,18 @@
                   <p class="date">
                     <i class="ri-calendar-line"></i>
                     <span>{{
-                      new Date(data.date_published).toLocaleString()
+                      new Date(data.body.date_published).toLocaleString()
                     }}</span>
                   </p>
                   <p class="view">
-                    <i class="ri-eye-line"></i> <span>{{ data.views }}</span>
+                    <i class="ri-eye-line"></i> <span>{{ data.body.views }}</span>
                   </p>
                 </div>
               </div>
               <div class="mb-5 py-1 px-1">
-                <img class="img-custom" :src="data.image" alt="blog details" />
+                <img class="img-custom" :src="data.body.image" alt="blog details" />
               </div>
-              <div class="content" v-html="data.content"></div>
+              <div class="content" v-html="data.body.content"></div>
             </div>
           </div>
 
@@ -48,68 +48,19 @@
               <div class="ud-articles-box">
                 <h3 class="ud-articles-box-title">Featured Articles</h3>
                 <ul class="ud-articles-list">
-                  <li>
+                  <li v-for="(item, key) in data.featured" :key="key">
                     <div class="ud-article-image">
                       <img
-                        src="/images/blog/article-author-01.png"
-                        alt="author"
+                        :src="item.image"
+                        :alt="item.image_alt"
                       />
                     </div>
                     <div class="ud-article-content">
                       <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          The 8 best landing page builders, reviewed
-                        </a>
+                        <nuxt-link :to="item.slug">
+                          {{ item.title }}
+                        </nuxt-link>
                       </h5>
-                      <p class="ud-article-author">Martin Fedous</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="ud-article-image">
-                      <img
-                        src="/images/blog/article-author-02.png"
-                        alt="author"
-                      />
-                    </div>
-                    <div class="ud-article-content">
-                      <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          Create engaging online courses your student…
-                        </a>
-                      </h5>
-                      <p class="ud-article-author">Glomiya Lucy</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="ud-article-image">
-                      <img
-                        src="/images/blog/article-author-03.png"
-                        alt="author"
-                      />
-                    </div>
-                    <div class="ud-article-content">
-                      <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          The ultimate formula for launching online course
-                        </a>
-                      </h5>
-                      <p class="ud-article-author">Andrio jeson</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="ud-article-image">
-                      <img
-                        src="/images/blog/article-author-04.png"
-                        alt="author"
-                      />
-                    </div>
-                    <div class="ud-article-content">
-                      <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          50 Best web design tips & tricks that will help you
-                        </a>
-                      </h5>
-                      <p class="ud-article-author">Samoyel Dayno</p>
                     </div>
                   </li>
                 </ul>
@@ -119,23 +70,8 @@
                 <h3 class="ud-articles-box-title">Categories</h3>
                 <div class="widget-categories">
                   <ul>
-                    <li>
-                      <a href="news.html">Consultant <span>(23)</span></a>
-                    </li>
-                    <li>
-                      <a href="news.html">Help <span>(24)</span></a>
-                    </li>
-                    <li>
-                      <a href="news.html">Education <span>(11)</span></a>
-                    </li>
-                    <li>
-                      <a href="news.html">Technology <span>(05)</span></a>
-                    </li>
-                    <li>
-                      <a href="news.html">Business <span>(06)</span></a>
-                    </li>
-                    <li>
-                      <a href="news.html">Events <span>(10)</span></a>
+                    <li v-for="(cat,k) in data.categories" :key="k">
+                      <nuxt-link :to="'/categories/'+(cat.category.category.toLowerCase().replace(' ','-'))">{{cat.category.category}} <span>({{cat.post_count}})</span></nuxt-link>
                     </li>
                   </ul>
                 </div>
@@ -144,68 +80,19 @@
               <div class="ud-articles-box">
                 <h3 class="ud-articles-box-title">Popular Articles</h3>
                 <ul class="ud-articles-list">
-                  <li>
+                  <li v-for="(item,key) in data.popular" :key="key">
                     <div class="ud-article-image">
                       <img
-                        src="/images/blog/article-author-01.png"
-                        alt="author"
+                        :src="item.image"
+                        :alt="item.image_alt"
                       />
                     </div>
                     <div class="ud-article-content">
                       <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          The 8 best landing page builders, reviewed
-                        </a>
+                        <nuxt-link :to="item.slug">
+                          {{item.title}}
+                        </nuxt-link>
                       </h5>
-                      <p class="ud-article-author">Martin Fedous</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="ud-article-image">
-                      <img
-                        src="/images/blog/article-author-02.png"
-                        alt="author"
-                      />
-                    </div>
-                    <div class="ud-article-content">
-                      <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          Create engaging online courses your student…
-                        </a>
-                      </h5>
-                      <p class="ud-article-author">Glomiya Lucy</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="ud-article-image">
-                      <img
-                        src="/images/blog/article-author-03.png"
-                        alt="author"
-                      />
-                    </div>
-                    <div class="ud-article-content">
-                      <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          The ultimate formula for launching online course
-                        </a>
-                      </h5>
-                      <p class="ud-article-author">Andrio jeson</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="ud-article-image">
-                      <img
-                        src="/images/blog/article-author-04.png"
-                        alt="author"
-                      />
-                    </div>
-                    <div class="ud-article-content">
-                      <h5 class="ud-article-title">
-                        <a href="javascript:void(0)">
-                          50 Best web design tips & tricks that will help you
-                        </a>
-                      </h5>
-                      <p class="ud-article-author">Samoyel Dayno</p>
                     </div>
                   </li>
                 </ul>
@@ -225,65 +112,21 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 col-md-6">
+          <div class="col-lg-4 col-md-6" v-for="item,key in data.related" :key="key">
             <div class="ud-single-blog">
               <div class="ud-blog-image">
                 <a href="blog-details.php">
-                  <img src="/images/blog/blog-01.jpg" alt="blog" />
+                  <img :src="item.image" :alt="item.image_alt" />
                 </a>
               </div>
               <div class="ud-blog-content">
-                <span class="ud-blog-date">Dec 22, 2023</span>
+                <span class="ud-blog-date">{{ new Date(item.created_at).toLocaleDateString() }}</span>
                 <h3 class="ud-blog-title">
                   <a href="blog-details.php">
-                    Meet AutoManage, the best AI management tools
+                    {{ item.title }}
                   </a>
                 </h3>
-                <p class="ud-blog-desc">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="ud-single-blog">
-              <div class="ud-blog-image">
-                <a href="blog-details.php">
-                  <img src="/images/blog/blog-02.jpg" alt="blog" />
-                </a>
-              </div>
-              <div class="ud-blog-content">
-                <span class="ud-blog-date">Dec 22, 2023</span>
-                <h3 class="ud-blog-title">
-                  <a href="blog-details.php">
-                    How to earn more money as a wellness coach
-                  </a>
-                </h3>
-                <p class="ud-blog-desc">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="ud-single-blog">
-              <div class="ud-blog-image">
-                <a href="blog-details.php">
-                  <img src="/images/blog/blog-03.jpg" alt="blog" />
-                </a>
-              </div>
-              <div class="ud-blog-content">
-                <span class="ud-blog-date">Dec 22, 2023</span>
-                <h3 class="ud-blog-title">
-                  <a href="blog-details.php">
-                    The no-fuss guide to upselling and cross selling
-                  </a>
-                </h3>
-                <p class="ud-blog-desc">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                <p class="ud-blog-desc" v-html="item.content.replaceAll(/<\/?[^>]+(>|$)/gi, '').slice(0,200)">
                 </p>
               </div>
             </div>
@@ -313,5 +156,12 @@ export default {
 }
 .img-custom{
   width: -webkit-fill-available;
+}
+
+.ud-blog-desc {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 </style>
