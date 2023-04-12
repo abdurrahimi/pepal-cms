@@ -207,7 +207,7 @@ export default {
     },
     submitHandler() {
       this.submit.category = true;
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .post("/api/category", this.form)
         .then((res) => {
@@ -232,7 +232,7 @@ export default {
     },
     submitEditHandler() {
       this.submit.category = true;
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .put("/api/category/" + this.edit.id, this.edit)
         .then((res) => {
@@ -259,7 +259,7 @@ export default {
         .then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            this.$axios.setBaseURL('/')
+
             this.$axios
               .delete("/api/category/" + id)
               .then((res) => {

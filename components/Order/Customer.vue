@@ -452,7 +452,7 @@ export default {
       reader.readAsDataURL(file);
     },
     submitHandler() {
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .post("/api/upload-bukti/" + this.$route.params.id, this.form)
         .then((res) => {

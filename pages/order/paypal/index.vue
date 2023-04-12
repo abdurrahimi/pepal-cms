@@ -343,12 +343,12 @@ export default {
   },
   methods: {
     async getPembayaran() {
-      this.$axios.setBaseURL('/')
+
       const { data } = await this.$axios.get("/api/bank");
       this.pembayaran = data;
     },
     applyVoucher() {
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .post("/api/voucher/apply", this.form)
         .then((res) => {
@@ -380,7 +380,7 @@ export default {
       }
       this.error = {};
       this.submit = true;
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .$post("/api/order", this.form)
         .then((res) => {

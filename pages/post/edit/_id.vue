@@ -286,14 +286,14 @@ export default {
   },
   methods: {
     async getData() {
-      this.$axios.setBaseURL('/')
+
       await this.$axios.get("/api/post/" + this.$route.params.id).then((res) => {
         this.form = res.data;
         tinyMCE.activeEditor.setContent(res.data.content);
       });
     },
     getCategory() {
-      this.$axios.setBaseURL('/')
+
       this.$axios.get("/api/category/all").then((res) => {
         this.categoryList = res.data;
       });
@@ -322,7 +322,7 @@ export default {
     submitHandler() {
       this.submit = true;
       this.form.content = tinymce.get("content").getContent();
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .put("/api/post/"+this.$route.params.id, this.form)
         .then((res) => {

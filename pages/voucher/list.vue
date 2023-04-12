@@ -79,7 +79,7 @@ export default {
         .then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            this.$axios.setBaseURL('/')
+
             this.$axios
               .delete("/api/voucher/" + id)
               .then((res) => {

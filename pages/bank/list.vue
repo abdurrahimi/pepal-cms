@@ -78,7 +78,7 @@ export default {
   methods: {
     submitHandler() {
       this.submit.category = true;
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .post("/api/category", this.form)
         .then((res) => {
@@ -105,7 +105,7 @@ export default {
         .then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            this.$axios.setBaseURL('/')
+
             this.$axios
               .delete("/api/bank/" + id)
               .then((res) => {

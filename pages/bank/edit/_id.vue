@@ -108,7 +108,7 @@ export default {
     getData() {},
     submitHandler() {
       this.submit = true;
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .put("/api/bank/" + this.$route.params.id, this.form)
         .then((res) => {

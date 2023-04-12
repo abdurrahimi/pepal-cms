@@ -289,7 +289,7 @@ export default {
   },
   methods: {
     getCategory() {
-      this.$axios.setBaseURL('/')
+
       this.$axios.get("/api/category/all").then((res) => {
         this.categoryList = res.data;
       });
@@ -318,7 +318,7 @@ export default {
     submitHandler() {
       this.submit = true;
       this.form.content = tinymce.get("content").getContent();
-      this.$axios.setBaseURL('/')
+
       this.$axios
         .post("/api/post", this.form)
         .then((res) => {

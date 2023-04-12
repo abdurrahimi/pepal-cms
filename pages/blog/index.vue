@@ -54,7 +54,7 @@ export default {
   },
   methods:{
     loadNewData(page){
-      this.$axios.setBaseURL('/')
+
       this.$axios.get('/api/blog/post?page='+page).then(res => {
         this.post = res.data
       })

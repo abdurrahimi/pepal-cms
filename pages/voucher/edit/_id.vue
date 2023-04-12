@@ -181,7 +181,7 @@
     methods: {
       submitHandler() {
         this.submit = true;
-        this.$axios.setBaseURL('/')
+
         this.$axios
           .put("/api/voucher/"+this.$route.params.id, this.form)
           .then((res) => {
