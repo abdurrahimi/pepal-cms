@@ -239,23 +239,18 @@ export default {
           },
           {
             data: "id",
-            className:"text-center",
+            className: "text-center",
             render: function (data) {
-              var btn = '<a href="/order/detail/' +
+              var btn =
+                '<a href="/order/detail/' +
                 data +
                 '" data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-info btn-sm" aria-label="View" data-bs-original-title="View"><i class="ri-eye-fill"></i></a>' +
-                `&nbsp;`
-              return btn
+                `&nbsp;`;
+              return btn;
             },
           },
         ],
       });
-      table.on('draw.dt', function () {
-        var info = table.page.info();
-        table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1 + info.start;
-        });
-    });
     },
   },
 };
