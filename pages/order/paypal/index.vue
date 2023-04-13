@@ -343,10 +343,12 @@ export default {
   },
   methods: {
     async getPembayaran() {
+
       const { data } = await this.$axios.get("/api/bank");
       this.pembayaran = data;
     },
     applyVoucher() {
+
       this.$axios
         .post("/api/voucher/apply", this.form)
         .then((res) => {
@@ -378,6 +380,7 @@ export default {
       }
       this.error = {};
       this.submit = true;
+
       this.$axios
         .$post("/api/order", this.form)
         .then((res) => {

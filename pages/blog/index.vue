@@ -14,33 +14,25 @@
               </nuxt-link>
             </div>
             <div class="ud-blog-content">
-              <span class="ud-blog-date">Dec 22, 2023</span>
+              <span class="ud-blog-date">{{ new Date(item.created_at).toLocaleDateString() }}</span>
               <h3 class="ud-blog-title">
                 <nuxt-link :to="'/blog/detail/' + item.slug">
                   {{ item.title }}
                 </nuxt-link>
               </h3>
-              <p class="ud-blog-desc" v-html="item.content"></p>
+              <p
+                class="ud-blog-desc"
+                v-html="
+                  item.content.replaceAll(/<\/?[^>]+(>|$)/gi, '').slice(0, 200)
+                "
+              ></p>
             </div>
           </div>
         </div>
         <div class="">
           <ul class="pagination">
-            <li class="icon">
-              <a href="#"><span class="ri-arrow-left-s-line"></span>Prev</a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">6</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">8</a></li>
-            <li><a href="#">9</a></li>
-            <li><a href="#">10</a></li>
-            <li class="icon">
-              <a href="#">Next<span class="ri-arrow-right-s-line"></span></a>
+            <li v-for="item,key in post.links" :key="key" :class="!item.active? 'icon' : ''">
+              <a href="#" @click="item.active ? loadNewData(item.label) : ''"><span v-html="item.label"></span></a>
             </li>
           </ul>
         </div>
@@ -52,21 +44,26 @@
 export default {
   layout: "main",
   auth: false,
-  async asyncData({ $axios, $config }) {
-    $axios.setBaseURL($config.baseURL);
-    const post = await $axios.$get(`/api/v1/blog/post`);
+  async asyncData({ store }) {
+    const post = await store.dispatch('post')
     return { post };
   },
   mounted() {
-    console.log("okok2");
   },
+  methods:{
+    loadNewData(page){
+      this.$axios.get('/api/blog/post?page='+page).then(res => {
+        this.post = res.data
+      })
+    }
+  }
 };
 </script>
 <style scoped>
 .ud-blog-desc {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
 </style>

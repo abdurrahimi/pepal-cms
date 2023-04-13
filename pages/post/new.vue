@@ -176,6 +176,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    v-model="form.is_featured"
                     id="isFeaturedChecked"
                     checked
                   />
@@ -261,6 +262,7 @@ export default {
         meta_title: "",
         meta_desc: "",
         status: true,
+        is_featured:false,
         date_published: "",
       },
     };
@@ -287,6 +289,7 @@ export default {
   },
   methods: {
     getCategory() {
+
       this.$axios.get("/api/category/all").then((res) => {
         this.categoryList = res.data;
       });
@@ -315,6 +318,7 @@ export default {
     submitHandler() {
       this.submit = true;
       this.form.content = tinymce.get("content").getContent();
+
       this.$axios
         .post("/api/post", this.form)
         .then((res) => {

@@ -152,12 +152,12 @@ export default {
   },
   methods: {
     register() {
-      console.log("masuk");
       if (this.form.password_confirmation != this.form.password) {
         this.error.message = "password tidak sama!";
         return;
       }
       this.error.message = "";
+
       this.$axios.post("/api/register", this.form).then((res) => {
         this.message = "Pendaftaran berhasil, mengaharkan ke halaman login"
         setTimeout(()=> {

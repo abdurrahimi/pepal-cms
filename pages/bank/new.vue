@@ -102,6 +102,7 @@ export default {
   methods: {
     submitHandler() {
       this.submit = true;
+
       this.$axios
         .post("/api/bank", this.form)
         .then((res) => {

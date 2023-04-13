@@ -455,6 +455,7 @@ export default {
     },
     addCatatan() {
       this.submit.catatan = true;
+
       this.$axios
         .post(`/api/catatan-order/${this.$route.params.id}`, this.catatan)
         .then((res) => {

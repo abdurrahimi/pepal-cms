@@ -12,9 +12,9 @@
             <div class="card-amount">
               <span class="amount fw-bolder">
                 {{
-                  new Intl.NumberFormat("id-ID", {
+                  new Intl.NumberFormat("en-US", {
                     style: "currency",
-                    currency: "IDR",
+                    currency: "USD",
                   }).format(topup)
                 }}
               </span>
@@ -25,9 +25,9 @@
                   <div class="title">Bulan Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.month?.filter(
                           (v) => v.tipe == "paypal"
@@ -40,9 +40,9 @@
                   <div class="title">Minggu Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.week?.filter(
                           (v) => v.tipe == "paypal"
@@ -68,9 +68,9 @@
             <div class="card-amount">
               <span class="amount fw-bolder">
                 {{
-                  new Intl.NumberFormat("id-ID", {
+                  new Intl.NumberFormat("en-US", {
                     style: "currency",
-                    currency: "IDR",
+                    currency: "USD",
                   }).format(
                     datas.transaksi?.all.filter((v) => v.tipe == "bayar")[0]
                       ?.total ?? 0
@@ -84,9 +84,9 @@
                   <div class="title">Bulan Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.month?.filter(
                           (v) => v.tipe == "bayar"
@@ -99,9 +99,9 @@
                   <div class="title">Minggu Ini</div>
                   <div class="amount">
                     {{
-                      new Intl.NumberFormat("id-ID", {
+                      new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "IDR",
+                        currency: "USD",
                       }).format(
                         datas.transaksi?.week?.filter(
                           (v) => v.tipe == "bayar"
@@ -147,19 +147,6 @@
     <div class="row">
       <div class="col-lg-8">
         <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"
-              ><i class="ri-more-line"></i
-            ></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
           <div class="card-body">
             <h5 class="card-title">Reports Monthly</h5>
             <!-- Line Chart -->
@@ -265,44 +252,51 @@
                 <div class="card-title fs-6">Top Up Saldo</div>
                 <div class="fs-5 fw-bold mb-2 text-primary">
                   {{
-                    new Intl.NumberFormat("id-ID", {
+                    new Intl.NumberFormat("en-US", {
                       style: "currency",
-                      currency: "IDR",
+                      currency: "USD",
                     }).format(topup)
                   }}
                 </div>
                 <div class="progress-card">
                   <template v-for="(item, key) in datas.transaksi?.all">
                     <div :key="key" v-if="item.tipe == 'paypal'">
-                      <div class="d-flex justify-content-between mb-1">
-                        <span>{{ item.status }}</span>
-                        <span class="fw-bold">{{
-                          new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                          }).format(item.total)
-                        }}</span>
-                      </div>
-                      <div class="progress mb-2" style="height: 8px">
-                        <div
-                          class="progress-bar"
-                          :class="
-                            background[
-                              Math.floor(Math.random() * background.length)
-                            ]
-                          "
-                          role="progressbar"
-                          :style="
-                            'width:' + Math.floor(Math.random() * 101) + '%'
-                          "
-                          :aria-valuenow="Math.random()"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          aria-label="80%"
-                          data-bs-original-title="80%"
-                        ></div>
+                      <div
+                        v-if="
+                          item.status == 'Waiting' ||
+                          item.status == 'Processing'
+                        "
+                      >
+                        <div class="d-flex justify-content-between mb-1">
+                          <span>{{ item.status }}</span>
+                          <span class="fw-bold">{{
+                            new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            }).format(item.total)
+                          }}</span>
+                        </div>
+                        <div class="progress mb-2" style="height: 8px">
+                          <div
+                            class="progress-bar"
+                            :class="
+                              item.status == 'Waiting'
+                                ? 'bg-primary'
+                                : 'bg-success'
+                            "
+                            role="progressbar"
+                            :style="
+                              'width:' + Math.floor(Math.random() * 101) + '%'
+                            "
+                            :aria-valuenow="Math.random()"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            aria-label="80%"
+                            data-bs-original-title="80%"
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   </template>
@@ -426,19 +420,6 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card recent-sales">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"
-              ><i class="ri-more-line"></i
-            ></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
           <div class="card-body">
             <h5 class="card-title">Recent Sales</h5>
             <div
@@ -447,22 +428,6 @@
             >
               <div class="row">
                 <div class="col-sm-12 col-md-6">
-                  <div class="dataTables_length" id="datatable_length">
-                    <label
-                      >Show
-                      <select
-                        name="datatable_length"
-                        aria-controls="datatable"
-                        class="form-select form-select-sm"
-                      >
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                      </select>
-                      entries</label
-                    >
-                  </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                   <div id="datatable_filter" class="dataTables_filter">
@@ -564,75 +529,38 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="odd">
+                      <tr
+                        class="odd"
+                        v-for="item in datas.latest"
+                        :key="item.id"
+                      >
                         <th
                           scope="row"
                           class="dtr-control sorting_1"
                           tabindex="0"
                         >
-                          <a href="#">#92457</a>
+                          <a :href="'/order/detail/'+item.id">#{{ item.id }}</a>
                         </th>
-                        <td>Aldy Fajar Putra Martin</td>
-                        <td>Top Up</td>
-                        <td>$125.00</td>
-                        <td>Rp1.800.750</td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                      </tr>
-                      <tr class="even">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92458</a>
-                        </th>
-                        <td>Ali Mufid</td>
-                        <td>Jasa Bayar</td>
-                        <td>$57.00</td>
-                        <td>Rp780.750</td>
-                        <td><span class="badge bg-warning">Waiting</span></td>
-                      </tr>
-                      <tr class="odd">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92459</a>
-                        </th>
-                        <td>Wendy Tanutama</td>
-                        <td>Top Up</td>
-                        <td>$210.00</td>
-                        <td>Rp3.200.000</td>
-                        <td><span class="badge bg-secondary">Sent</span></td>
-                      </tr>
-                      <tr class="even">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92460</a>
-                        </th>
-                        <td>Rudi Laksamana</td>
-                        <td>Top Up</td>
-                        <td>$1200.00</td>
-                        <td>Rp15.800.750</td>
-                        <td><span class="badge bg-danger">Refunded</span></td>
-                      </tr>
-                      <tr class="odd">
-                        <th
-                          scope="row"
-                          class="dtr-control sorting_1"
-                          tabindex="0"
-                        >
-                          <a href="#">#92461</a>
-                        </th>
-                        <td>Kota Komputer Mandiri</td>
-                        <td>Jasa Bayar</td>
-                        <td>$165.00</td>
-                        <td>Rp1.800.750</td>
-                        <td><span class="badge bg-info">Processing</span></td>
+                        <td>{{ item.user?.name }}</td>
+                        <td>
+                          <span v-if="item.tipe == 'paypal'"> Top Up</span>
+                          <span v-else> Pembayaran </span>
+                        </td>
+                        <td>
+                          {{
+                            new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            }).format(item.nominal)
+                          }}
+                        </td>
+                        <td>{{
+                          new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(item.total)
+                        }}</td>
+                        <td><Status :status="item.status"/></td>
                       </tr>
                     </tbody>
                   </table>
@@ -646,7 +574,7 @@
                     role="status"
                     aria-live="polite"
                   >
-                    Showing 1 to 5 of 5 entries
+                    Showing 1 to {{datas.latest.length}} of {{datas.latest.length}} entries
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
@@ -709,7 +637,7 @@ export default {
   name: "IndexPage",
   data() {
     return {
-      datas: { total: [], transaksi: { all: [] } },
+      datas: { total: [], transaksi: { all: [] }, latest: [] },
       background: [
         "bg-primary",
         "bg-secondary",
@@ -755,6 +683,7 @@ export default {
   },
   methods: {
     getData() {
+
       this.$axios.get("/api/dashboard").then((res) => {
         this.datas = res.data;
       });
