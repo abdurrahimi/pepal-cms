@@ -427,8 +427,7 @@
               class="dataTables_wrapper dt-bootstrap5 no-footer"
             >
               <div class="row">
-                <div class="col-sm-12 col-md-6">
-                </div>
+                <div class="col-sm-12 col-md-6"></div>
                 <div class="col-sm-12 col-md-6">
                   <div id="datatable_filter" class="dataTables_filter">
                     <label
@@ -539,7 +538,9 @@
                           class="dtr-control sorting_1"
                           tabindex="0"
                         >
-                          <a :href="'/order/detail/'+item.id">#{{ item.id }}</a>
+                          <a :href="'/order/detail/' + item.id"
+                            >#{{ item.id }}</a
+                          >
                         </th>
                         <td>{{ item.user?.name }}</td>
                         <td>
@@ -554,13 +555,15 @@
                             }).format(item.nominal)
                           }}
                         </td>
-                        <td>{{
-                          new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                          }).format(item.total)
-                        }}</td>
-                        <td><Status :status="item.status"/></td>
+                        <td>
+                          {{
+                            new Intl.NumberFormat("id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                            }).format(item.total)
+                          }}
+                        </td>
+                        <td><Status :status="item.status" /></td>
                       </tr>
                     </tbody>
                   </table>
@@ -574,7 +577,8 @@
                     role="status"
                     aria-live="polite"
                   >
-                    Showing 1 to {{datas.latest.length}} of {{datas.latest.length}} entries
+                    Showing 1 to {{ datas.latest.length }} of
+                    {{ datas.latest.length }} entries
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
@@ -680,13 +684,77 @@ export default {
   },
   mounted() {
     this.getData();
+    //this.loadChart();
   },
   methods: {
     getData() {
-
       this.$axios.get("/api/dashboard").then((res) => {
         this.datas = res.data;
+        this.loadChart(
+          res.data.daily.topup,
+          res.data.daily.bayar,
+          res.data.daily.date
+        );
       });
+    },
+    loadChart(topup, bayar, date) {
+      new ApexCharts(document.querySelector("#reportsChart"), {
+        series: [
+          {
+            name: "Top Up",
+            data: topup,
+          },
+          {
+            name: "Jasa Bayar",
+            data: bayar,
+          },
+        ],
+        chart: {
+          height: 365,
+          type: "area",
+          toolbar: {
+            show: false,
+          },
+        },
+        markers: {
+          size: 4,
+        },
+        colors: ["#0f67ff", "#fb5272"],
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.3,
+            opacityTo: 0.4,
+            stops: [0, 90, 100],
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: "smooth",
+          width: 2,
+        },
+        xaxis: {
+          type: "date",
+          categories: date,
+        },
+        yaxis: [
+          {
+            labels: {
+              formatter: function (val) {
+                return val.toFixed(0);
+              },
+            },
+          },
+        ],
+        tooltip: {
+          x: {
+            format: "dd/MM/yy HH:mm",
+          },
+        },
+      }).render();
     },
   },
 };
