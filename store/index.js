@@ -32,4 +32,13 @@ export const actions = {
       return response.data
     }
   },
+  async profile({ commit },param) {
+    if(this.$axios.defaults.baseURL == '/'){
+      const response = await this.$axios.get('/api/profile')
+      return response.data
+    }else{
+      const response = await this.$axios.get('/api/v1/profile')
+      return response.data
+    }
+  },
 }

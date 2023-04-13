@@ -120,25 +120,25 @@
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <a
+                <nuxt-link
                   class="dropdown-item d-flex align-items-center"
-                  href="users-profile.html"
+                  to="/profile"
                 >
                   <i class="ri-user-line"></i>
                   <span>My Profile</span>
-                </a>
+              </nuxt-link>
               </li>
               <li>
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <a
+                <nuxt-link
                   class="dropdown-item d-flex align-items-center"
-                  href="users-profile.html"
+                  to="/profile"
                 >
                   <i class="ri-settings-2-line"></i>
                   <span>Account Settings</span>
-                </a>
+                </nuxt-link>
               </li>
               <li>
                 <hr class="dropdown-divider" />

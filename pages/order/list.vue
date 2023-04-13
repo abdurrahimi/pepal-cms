@@ -240,6 +240,7 @@ export default {
           {
             data: "id",
             className: "text-center",
+            orderable:false,
             render: function (data) {
               var btn =
                 '<a href="/order/detail/' +

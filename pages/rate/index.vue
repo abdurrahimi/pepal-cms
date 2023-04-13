@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="pagetitle">
-      <h1 class="fs-5 mb-1">Category List</h1>
+      <h1 class="fs-5 mb-1">Rate List</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><nuxt-link to="/">Home</nuxt-link></li>
-          <li class="breadcrumb-item active">Category List</li>
+          <li class="breadcrumb-item active">Rate List</li>
         </ol>
       </nav>
     </div>
@@ -17,15 +17,7 @@
             <div class="card-body col-lg-12 row">
               <!-- Line Chart -->
               <div class="d-flex justify-content-between">
-                <span class="card-title">Category List</span>
-                <button
-                  style="margin: 20px; margin-right: 0px"
-                  type="button"
-                  class="btn btn-primary"
-                  @click="addNew()"
-                >
-                  Add new
-                </button>
+                <span class="card-title">Rate List</span>
               </div>
               <div class="col-lg-12">
                 <table
@@ -34,7 +26,11 @@
                 >
                   <thead>
                     <tr>
-                      <th>Category Name</th>
+                      <th>RATE</th>
+                      <th>E-RATE BCA</th>
+                      <th>STATUS</th>
+                      <th>CREATED AT</th>
+                      <th>UPDATED AT</th>
                       <th style="width: 15%">Action</th>
                     </tr>
                   </thead>
@@ -42,66 +38,6 @@
               </div>
 
               <!-- End Line Chart -->
-            </div>
-          </div>
-        </div>
-        <div
-          class="modal fade"
-          id="category-modal"
-          tabindex="-1"
-          style="display: none"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Add Category
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <form id="page-form" action="" @submit.prevent="submitHandler()">
-                <div class="modal-body">
-                  <div class="form-group d-grid gap-2">
-                    <div class="">
-                      <label for="nominal_transfer" class="col-form-label"
-                        >Nama Category</label
-                      >
-                      <input
-                        type="text"
-                        placeholder="Masukkan nama category"
-                        v-model="form.category"
-                        class="form-control"
-                        aria-label=""
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    v-if="!submit.category"
-                    type="submit"
-                    class="btn btn-primary"
-                  >
-                    Save
-                  </button>
-                  <button v-else type="button" class="btn btn-primary disabled">
-                    Saving...
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
@@ -134,15 +70,40 @@
                   <div class="form-group d-grid gap-2">
                     <div class="">
                       <label for="nominal_transfer" class="col-form-label"
-                        >Nama Category</label
+                        >Rate Website</label
                       >
                       <input
                         type="text"
                         placeholder="Masukkan nama category"
-                        v-model="edit.category"
+                        v-model="edit.rate"
                         class="form-control"
                         aria-label=""
                       />
+                    </div>
+                  </div>
+                  <div class="form-group d-grid gap-2">
+                    <div class="">
+                      <label for="nominal_transfer" class="col-form-label"
+                        >E-Rate BCA</label
+                      >
+                      <input
+                        type="text"
+                        placeholder="Masukkan nama category"
+                        v-model="edit.original"
+                        class="form-control"
+                        aria-label=""
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group d-grid gap-2">
+                    <div class="">
+                      <label for="nominal_transfer" class="col-form-label"
+                        >Status</label
+                      >
+                      <select class="form-control" v-model="edit.status">
+                        <option value="1">Active</option>
+                        <option value="0">Non-Active</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -173,16 +134,15 @@
     </section>
   </div>
 </template>
-<script>
+  <script>
 export default {
   data() {
     return {
-      form: {
-        category: "",
-      },
       edit: {
         id: null,
-        category: "",
+        original: 0,
+        rate: 0,
+        status:0,
       },
       submit: {
         category: false,
@@ -194,39 +154,20 @@ export default {
     };
   },
   async mounted() {
-    if(this.$auth.user.role != 'admin'){
-      this.$router.replace('/404')
+    if (this.$auth.user.role != "admin") {
+      this.$router.replace("/404");
     }
     window.editCategory = this.editCategory;
     window.deleteCategory = this.deleteCategory;
     setTimeout(() => this.loadDatatable(), 500);
   },
   methods: {
-    addNew() {
-      $("#category-modal").modal("show");
-    },
-    submitHandler() {
-      this.submit.category = true;
-
-      this.$axios
-        .post("/api/category", this.form)
-        .then((res) => {
-          this.form = {
-            category: "",
-          };
-          $("#category-modal").modal("hide");
-          this.submit.category = false;
-          this.$swal.fire("Success", "Category berhasil disimpan", "success");
-          table.ajax.reload();
-        })
-        .catch((err) => {
-          this.$swal.fire("Failed", "Terjadi error!", "error");
-        });
-    },
-    editCategory(id, category) {
+    editCategory(id, original, rate, status) {
       this.edit = {
         id: id,
-        category: category,
+        original: original,
+        rate: rate,
+        status: status
       };
       $("#category-modal-edit").modal("show");
     },
@@ -234,46 +175,18 @@ export default {
       this.submit.category = true;
 
       this.$axios
-        .put("/api/category/" + this.edit.id, this.edit)
+        .put("/api/rate/update/" + this.edit.id, this.edit)
         .then((res) => {
           this.edit = {
             category: "",
           };
           $("#category-modal-edit").modal("hide");
           this.submit.edit = false;
-          this.$swal.fire("Success", "Category berhasil disimpan", "success");
+          this.$swal.fire("Success", "Rate berhasil disimpan", "success");
           table.ajax.reload();
         })
         .catch((err) => {
           this.$swal.fire("Failed", "Terjadi error!", "error");
-        });
-    },
-    deleteCategory(id) {
-      this.$swal
-        .fire({
-          title: "Yakin menghapus data ?",
-          showDenyButton: false,
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-        })
-        .then((result) => {
-          /* Read more about isConfirmed, isDenied below */
-          if (result.isConfirmed) {
-
-            this.$axios
-              .delete("/api/category/" + id)
-              .then((res) => {
-                this.$swal.fire(
-                  "Success",
-                  "Category berhasil dihapus",
-                  "success"
-                );
-                table.ajax.reload();
-              })
-              .catch((err) => {
-                this.$swal.fire("Failed", "Terjadi error!", "error");
-              });
-          }
         });
     },
     loadDatatable() {
@@ -284,7 +197,7 @@ export default {
         serverSide: true,
         processing: true,
         ajax: {
-          url: "/api/category",
+          url: "/api/rate/list",
           type: "get",
           beforeSend: function (request) {
             request.setRequestHeader("Authorization", token);
@@ -296,17 +209,44 @@ export default {
           },
         },
         columns: [
-          { data: "category" },
+          {
+            data: "rate",
+            render: $.fn.dataTable.render.number(",", ".", 2, "Rp"),
+          },
+          {
+            data: "original",
+            render: $.fn.dataTable.render.number(",", ".", 2, "Rp"),
+          },
+          {
+            data: "is_active",
+            render: function (data) {
+              if (data == 1) {
+                return `<span class="badge bg-success">Active</span>&nbsp;`;
+              } else {
+                return `<span class="badge bg-secondary">Non-Active</span>&nbsp;`;
+              }
+            },
+          },
+          {
+            data: "created_at",
+            render: function (data) {
+              return new Date(data).toLocaleString();
+            },
+          },
+          {
+            data: "updated_at",
+            render: function (data) {
+              return new Date(data).toLocaleString();
+            },
+          },
           {
             data: null,
+            orderable: false,
             className: "text-center",
             render: function (data) {
-              var btn = `<button type="button" class="btn btn-warning btn-sm" title="Edit Category" onclick="editCategory(${data.id},'${data.category}')">
-                      <i data-bs-toggle="modal" data-bs-target="#order-id" class="ri-pencil-fill"></i>
-                   </button>&nbsp`;
-              btn += `<button type="button" class="btn btn-danger btn-sm" onclick="deleteCategory(${data.id})">
-                      <i class="ri-delete-bin-line"></i>
-                   </button>`;
+              var btn = `<button type="button" class="btn btn-warning btn-sm" onclick="editCategory(${data.id},${data.original},${data.rate},${data.is_active})">
+                        <i class="ri-pencil-fill"></i>
+                     </button>`;
               return btn;
             },
           },
@@ -316,3 +256,4 @@ export default {
   },
 };
 </script>
+  

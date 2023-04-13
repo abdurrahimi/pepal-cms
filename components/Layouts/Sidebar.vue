@@ -89,6 +89,28 @@
           </li>
         </ul>
       </li>
+      <li class="nav-item" v-if="$auth.user.role == 'admin'">
+        <a
+          class="nav-link collapsed"
+          data-bs-target="#rate-nav"
+          data-bs-toggle="collapse"
+          href="#"
+          aria-expanded="false"
+        >
+          <i class="ri-money-dollar-circle-fill"></i><span>Rate</span
+          ><i class="ri-arrow-right-s-line arrow-down ms-auto"></i>
+        </a>
+        <ul
+          id="rate-nav"
+          class="nav-content collapse"
+          data-bs-parent="#sidebar-nav"
+          style=""
+        >
+          <li>
+            <nuxt-link to="/rate/"> <span>Rate List</span> </nuxt-link>
+          </li>
+        </ul>
+      </li>
       <li class="nav-heading" v-if="$auth.user.role == 'admin'">Blog</li>
       <li class="nav-item" v-if="$auth.user.role == 'admin'">
         <a
