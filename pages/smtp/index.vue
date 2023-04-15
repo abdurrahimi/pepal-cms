@@ -199,7 +199,6 @@
     },
     methods: {
       editCategory(data) {
-        console.log(data)
         this.edit = data
         $("#category-modal-edit").modal("show");
       },
