@@ -267,33 +267,31 @@ export default {
     };
   },
   async mounted() {
-
     setTimeout(() => {
       if (tinymce.activeEditor != null) tinymce.activeEditor.destroy();
-      tinymce.init(
-        {
-          selector: "#content",
-          plugins:
-            "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-          toolbar:
-            "blocks | bold italic underline | alignleft aligncenter alignjustify | numlist bullist | forecolor backcolor removeformat | pagebreak | insertfile image media template link",
-        },
-        300
-      );
-    });
+      tinymce.init({
+        selector: "#content",
+        plugins:
+          "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+        toolbar:
+          "blocks | bold italic underline | alignleft aligncenter alignjustify | numlist bullist | forecolor backcolor removeformat | pagebreak | insertfile image media template link",
+      });
+    }, 1);
     await this.getCategory();
     await this.getData();
   },
   methods: {
     async getData() {
-
-      await this.$axios.get("/api/post/" + this.$route.params.id).then((res) => {
-        this.form = res.data;
-        tinyMCE.activeEditor.setContent(res.data.content);
-      });
+      await this.$axios
+        .get("/api/post/" + this.$route.params.id)
+        .then((res) => {
+          this.form = res.data;
+          setTimeout(() => {
+            tinyMCE.activeEditor.setContent(res.data.content);
+          }, 300);
+        });
     },
     getCategory() {
-
       this.$axios.get("/api/category/all").then((res) => {
         this.categoryList = res.data;
       });
@@ -324,7 +322,7 @@ export default {
       this.form.content = tinymce.get("content").getContent();
 
       this.$axios
-        .put("/api/post/"+this.$route.params.id, this.form)
+        .put("/api/post/" + this.$route.params.id, this.form)
         .then((res) => {
           this.$swal.fire("Success", "Postingan berhasil disimpan", "success");
           this.$router.push("/post/list");
