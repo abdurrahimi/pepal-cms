@@ -111,6 +111,32 @@
           </li>
         </ul>
       </li>
+      <li class="nav-heading" v-if="$auth.user.role == 'admin'">Email</li>
+      <li class="nav-item" v-if="$auth.user.role == 'admin'">
+        <a
+          class="nav-link collapsed"
+          data-bs-target="#email-nav"
+          data-bs-toggle="collapse"
+          href="#"
+          aria-expanded="false"
+        >
+          <i class="ri-mail-send-line"></i><span>Setting</span
+          ><i class="ri-arrow-right-s-line arrow-down ms-auto"></i>
+        </a>
+        <ul
+          id="email-nav"
+          class="nav-content collapse"
+          data-bs-parent="#sidebar-nav"
+          style=""
+        >
+          <li>
+            <nuxt-link to="/smtp"> <span>SMTP Config</span> </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/email"> <span>Email Template</span> </nuxt-link>
+          </li>
+        </ul>
+      </li>
       <li class="nav-heading" v-if="$auth.user.role == 'admin'">Blog</li>
       <li class="nav-item" v-if="$auth.user.role == 'admin'">
         <a
