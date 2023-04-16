@@ -445,7 +445,7 @@ export default {
           };
           this.$swal.fire("Success", res.message, "success");
           this.submit.history = false;
-          this.$emit("getDetail");
+          window.location.reload()
           $("#noted").modal("hide");
         })
         .catch((err) => {

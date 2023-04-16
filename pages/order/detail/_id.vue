@@ -10,6 +10,11 @@ export default {
     $axios.setBaseURL($config.baseURL);
     const { data }  = await $axios.get(`/api/v1/order/${route.params.id}`)
     return { data }
+  },
+  methods:{
+    getDetail(){
+      
+    }
   }
 }
 </script>
