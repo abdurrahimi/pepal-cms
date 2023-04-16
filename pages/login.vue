@@ -153,6 +153,9 @@ export default {
         })
         .catch((err) => {
           this.submitting = false;
+          if(err.response.status === 431){
+            alert('Akun anda belum di aktivasi')
+          }
           if (
             err.response.hasOwnProperty("status") &&
             err.response.status === 422

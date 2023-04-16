@@ -1,11 +1,11 @@
 <template>
     <div>
       <div class="pagetitle">
-        <h1 class="fs-5 mb-1">Bank List</h1>
+        <h1 class="fs-5 mb-1">Template Email List</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><nuxt-link to="/">Home</nuxt-link></li>
-            <li class="breadcrumb-item active">Bank List</li>
+            <li class="breadcrumb-item active">Template Email List</li>
           </ol>
         </nav>
       </div>
@@ -17,15 +17,15 @@
               <div class="card-body col-lg-12 row">
                 <!-- Line Chart -->
                 <div class="d-flex justify-content-between">
-                  <span class="card-title">Bank List</span>
-                  <nuxt-link
+                  <span class="card-title">Template Email List</span>
+                 <!--  <nuxt-link
                     style="margin: 20px; margin-right: 0px"
                     type="button"
                     class="btn btn-primary"
                     to="/bank/new"
                   >
                     Add new
-                  </nuxt-link>
+                  </nuxt-link> -->
                 </div>
                 <div class="col-lg-12">
                   <table
@@ -101,7 +101,7 @@
               data: null,
               className: "text-center",
               render: function (data) {
-                var btn = `<a type="button" class="btn btn-warning btn-sm" title="Edit Category" href="/template/edit/${data.id}">
+                var btn = `<a type="button" class="btn btn-warning btn-sm" title="Edit Category" href="/email/edit/${data.id}">
                           <i class="ri-pencil-fill"></i>
                        </a>&nbsp`;
                 return btn;

@@ -159,10 +159,10 @@ export default {
       this.error.message = "";
 
       this.$axios.post("/api/register", this.form).then((res) => {
-        this.message = "Pendaftaran berhasil, mengaharkan ke halaman login"
+        this.message = "Pendaftaran berhasil, kode verifikasi telah dikirim ke email anda"
         setTimeout(()=> {
             this.$router.push('/login')
-        },2000)
+        },5000)
       }).catch(err => {
         this.error.message = "periksa kembali form anda"
       })
