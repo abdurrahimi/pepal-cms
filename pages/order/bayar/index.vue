@@ -433,7 +433,7 @@ export default {
         .then((res) => {
           this.$swal.fire("Success", "Pesananmu telah disimpan", "success");
           this.submit = false;
-          this.$router.push("/order/list");
+          window.location.href = "/order/pembayaran/"+res.id;
         })
         .catch((err) => {
           if (err.response.status == 400) {
