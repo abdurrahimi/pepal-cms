@@ -27,33 +27,55 @@
                   <div class="container">
                     <h3 class="text-center fw-bold mb-4">Login Form</h3>
                     <p class="mb-2">Masukkan email dan password Anda!</p>
-                    <form method="post" action="" @submit.prevent="handleSubmit">
-                      <div class="d-grid gap-3">
-                        <div class="form-group floating-label">
-                          <input
-                            type="text"
-                            name="email"
-                            value=""
-                            v-model="form.email"
-                            placeholder=""
-                            id="input-email"
-                            class="form-control"
-                          />
-                          <label for="input-email">Email</label>
+                    <form
+                      method="post"
+                      action=""
+                      @submit.prevent="handleSubmit"
+                    >
+                      <div >
+                        <div class="d-grid gap-3" :style="otp ? 'display:none !important':'display:block'">
+                          <div class="form-group floating-label">
+                            <input
+                              type="email"
+                              name="email"
+                              value=""
+                              v-model="form.email"
+                              placeholder=""
+                              required
+                              id="input-email"
+                              class="form-control"
+                            />
+                            <label for="input-email">Email</label>
+                          </div>
+                          <div class="form-group floating-label">
+                            <input
+                              type="password"
+                              name="password"
+                              v-model="form.password"
+                              value=""
+                              required
+                              placeholder=""
+                              id="input-password"
+                              class="form-control"
+                            />
+                            <label for="input-password">Password</label>
+                            <div class="text-end mt-1 small">
+                              <a href="reset.php">Lupa password?</a>
+                            </div>
+                          </div>
                         </div>
-                        <div class="form-group floating-label">
-                          <input
-                            type="password"
-                            name="password"
-                            v-model="form.password"
-                            value=""
-                            placeholder=""
-                            id="input-password"
-                            class="form-control"
-                          />
-                          <label for="input-password">Password</label>
-                          <div class="text-end mt-1 small">
-                            <a href="reset.php">Lupa password?</a>
+                        <div class="d-grid gap-3 mb-2" :style="otp ? 'display:block':'display:none !important'">
+                          <div class="form-group floating-label">
+                            <input
+                              type="text"
+                              name="otp"
+                              value=""
+                              v-model="form.otp"
+                              placeholder=""
+                              id="input-email"
+                              class="form-control"
+                            />
+                            <label for="input-email">Kode OTP</label>
                           </div>
                         </div>
                         <button
@@ -89,39 +111,90 @@
 </template>
 <script>
 export default {
-    layout:"main",
-    auth:false,
-    data(){
-        return{
-            submitting:false,
-            form:{
-                email:"",
-                password:""
-            },
-            error:{
-                email:"",
-                password:""
-            }
-        }
+  layout: "main",
+  auth: false,
+  data() {
+    return {
+      submitting: false,
+      otp: false,
+      form: {
+        email: "",
+        password: "",
+        otp: "",
+      },
+      error: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    async handleSubmit(e) {
+      if(this.otp && this.form.otp !== ""){
+        this.login();
+        return;
+      }
+
+      if(this.otp && this.form.otp == ""){
+        alert('kode otp tidak boleh kosong!')
+      }
+
+      this.submitting = true;
+      this.$axios
+        .post("/api/verify", { data: this.form })
+        .then((res) => {
+          this.submitting = false;
+          if (res.data.otp) {
+            this.otp = true
+          }
+          if (!res.data.otp){
+            this.login();
+          }
+        })
+        .catch((err) => {
+          this.submitting = false;
+          if (
+            err.response.hasOwnProperty("status") &&
+            err.response.status === 422
+          ) {
+            this.error = err.response.data;
+          }
+          if (
+            err.response.hasOwnProperty("status") &&
+            err.response.status === 401
+          )
+            alert("Please check username & password");
+        });
     },
-    methods:{
-        async handleSubmit(e){
-            this.submitting = true
-            this.$auth.loginWith('laravelJWT', {data:this.form})
-            .then((res) =>{
-              this.$cookies.set('access_token', res.access_token)
-                window.location.href = '/dashboard'
-                this.submitting = false
-            })
-            .catch((err) =>{
-                this.submitting = false
-                if(err.response.hasOwnProperty('status') && err.response.status === 422){
-                    this.error = err.response.data
-                }
-                if(err.response.hasOwnProperty('status') && err.response.status === 401)
-                    alert('Please check username & password')
-            })
-        }
-    }
-}
+    login() {
+      this.submitting = true;
+      this.$auth
+        .loginWith("laravelJWT", { data: this.form })
+        .then((res) => {
+          this.$cookies.set("access_token", res.access_token);
+          window.location.href = "/dashboard";
+          this.submitting = false;
+        })
+        .catch((err) => {
+          this.submitting = false;
+          if(err.response.status == 400){
+            alert('Kode OTP Tidak Valid atau kadaluarsa')
+          }
+          if (
+            err.response.hasOwnProperty("status") &&
+            err.response.status === 422
+            
+          ) {
+            this.error = err.response.data;
+          }
+          if (
+            err.response.hasOwnProperty("status") &&
+            err.response.status === 401
+          ){
+            alert("Please check username & password");
+          }
+        });
+    },
+  },
+};
 </script>

@@ -289,7 +289,6 @@ export default {
   },
   methods: {
     getCategory() {
-
       this.$axios.get("/api/category/all").then((res) => {
         this.categoryList = res.data;
       });

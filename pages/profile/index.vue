@@ -145,16 +145,24 @@
                           alt="Profile"
                         />
                         <div class="pt-2">
+                          <input
+                            id="imageSelect"
+                            type="file"
+                            @change="onFileChange"
+                            style="display: none"
+                          />
                           <a
                             href="#"
                             class="btn btn-primary btn-sm"
-                            title="Upload new profile image"
+                            @click="uploadImage()"
+                            title="Upload image"
                             ><i class="ri-upload-2-line"></i
                           ></a>
                           <a
                             href="#"
                             class="btn btn-danger btn-sm"
-                            title="Remove my profile image"
+                            @click="removeImage()"
+                            title="Remove image"
                             ><i class="ri-delete-bin-6-line"></i
                           ></a>
                         </div>
@@ -489,6 +497,7 @@ export default {
       profile_pict: this.user.profile_pict,
       name: this.user.name,
       profesi: this.user.profesi,
+      alamat: this.user.alamat,
       phone: this.user.phone,
       email: this.user.email,
     };
@@ -503,6 +512,7 @@ export default {
       await this.$axios
         .post("/api/profile", this.form)
         .then((res) => {
+          this.$auth.fetchUser()
           this.form = {
             profile_pict: res.data.user.profile_pict,
             name: res.data.user.name,
@@ -552,6 +562,27 @@ export default {
           }
           this.$swal.fire("Failed", "Terjadi error!", "error");
         });
+    },
+    uploadImage() {
+      $("#imageSelect").click();
+    },
+    removeImage() {
+      this.form.profile_pict = "/assets/img/preview.png";
+    },
+    onFileChange(e) {
+      var files = e.target.files;
+      if (!files.length) return;
+      Object.values(files).map((file) => {
+        this.createImage(file);
+      });
+      $("#inputImage").val("");
+    },
+    createImage(file, key) {
+      var reader = new FileReader();
+      reader.onload = (e) => {
+        this.form.profile_pict = e.target.result;
+      };
+      reader.readAsDataURL(file);
     },
   },
 };

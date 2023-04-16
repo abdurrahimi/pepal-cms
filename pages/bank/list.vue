@@ -149,7 +149,7 @@ export default {
             data: null,
             className: "text-center",
             render: function (data) {
-              var btn = `<a type="button" class="btn btn-secondary btn-sm" title="Edit Category" href="/bank/edit/${data.id}">
+              var btn = `<a type="button" class="btn btn-warning btn-sm" title="Edit Category" href="/bank/edit/${data.id}">
                         <i class="ri-pencil-fill"></i>
                      </a>&nbsp`;
               btn += `<button type="button" class="btn btn-danger btn-sm" onclick="deleteBank(${data.id})">

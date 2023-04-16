@@ -99,7 +99,7 @@
               data-bs-toggle="dropdown"
             >
               <img
-                src="/assets/img/profile-img.webp"
+                :src="$auth.user.profile"
                 alt="Profile"
                 width="36"
                 height="36"
