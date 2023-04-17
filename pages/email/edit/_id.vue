@@ -43,6 +43,7 @@
                   <li>Kode Aktivasi : [kode-aktivasi]</li>
                   <li>Kode OTP : [kode-otp]</li>
                   <li>Order Detail : [order-detail]</li>
+                  <li>Order Detail : [forgot-code]</li>
                 </ul>
               </div>
               <div></div>

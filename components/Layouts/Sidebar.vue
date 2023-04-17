@@ -7,7 +7,32 @@
           <span>Dashboard</span>
         </nuxt-link>
       </li>
-      <!-- End Dashboard Nav -->
+      <li class="nav-heading" v-if="$auth.user.role == 'admin'">User Management</li>
+      <li class="nav-item" v-if="$auth.user.role == 'admin'">
+        <a
+          class="nav-link collapsed"
+          data-bs-target="#user-nav"
+          data-bs-toggle="collapse"
+          href="#"
+          aria-expanded="false"
+        >
+          <i class="ri-user-line"></i><span>Users</span
+          ><i class="ri-arrow-right-s-line arrow-down ms-auto"></i>
+        </a>
+        <ul
+          id="user-nav"
+          class="nav-content collapse"
+          data-bs-parent="#sidebar-nav"
+          style=""
+        >
+          <li>
+            <nuxt-link to="/user/admin"> <span>Admin List</span> </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/user/member"> <span>Member List</span> </nuxt-link>
+          </li>
+        </ul>
+      </li>
       <li class="nav-heading">Order</li>
       <li class="nav-item">
         <a

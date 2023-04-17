@@ -60,7 +60,7 @@
                             />
                             <label for="input-password">Password</label>
                             <div class="text-end mt-1 small">
-                              <a href="reset.php">Lupa password?</a>
+                              <nuxt-link to="/forgot">Lupa password?</nuxt-link>
                             </div>
                           </div>
                         </div>
@@ -94,7 +94,7 @@
                         </button>
                         <p>
                           Belum punya akun Saldobit?
-                          <a href="/register">Daftar</a>
+                          <nuxt-link to="/register">Daftar</nuxt-link>
                         </p>
                       </div>
                     </form>

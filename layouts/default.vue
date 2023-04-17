@@ -20,7 +20,7 @@
       <!-- End Logo -->
       <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" style="display:none !important">
             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
               <i class="ri-notification-3-line"></i>
               <span class="badge bg-primary badge-number">4</span> </a
